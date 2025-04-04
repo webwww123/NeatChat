@@ -10,6 +10,7 @@ import { getClientConfig } from "../config/client";
 import { PasswordInput } from "./ui-lib";
 import LeftIcon from "@/app/icons/left.svg";
 import clsx from "clsx";
+import KeyIcon from "@/app/icons/key.svg";
 
 export function AuthPage() {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ export function AuthPage() {
       <div className={styles["auth-tips"]}>{Locale.Auth.Tips}</div>
 
       <PasswordInput
-        style={{ marginTop: "3vh", marginBottom: "3vh" }}
+        style={{ marginTop: "3vh", marginBottom: "1vh" }}
         aria={Locale.Settings.ShowPassword}
         aria-label={Locale.Auth.Input}
         value={accessStore.accessCode}
@@ -59,6 +60,24 @@ export function AuthPage() {
           );
         }}
       />
+
+      <div style={{ textAlign: "center", margin: "1vh 0 3vh" }}>
+        <a
+          onClick={() => navigate(Path.Purchase)}
+          style={{ 
+            color: "var(--primary)",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "5px",
+            fontSize: "14px"
+          }}
+        >
+          <KeyIcon style={{ width: "14px", height: "14px" }} />
+          点击这里购买秘钥
+        </a>
+      </div>
 
       {!accessStore.hideUserApiKey ? (
         <>
