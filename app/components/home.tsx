@@ -31,6 +31,7 @@ import { useAccessStore } from "../store";
 import clsx from "clsx";
 import { initializeMcpSystem, isMcpEnabled } from "../mcp/actions";
 import { PurchasePage } from "./purchase";
+import { InvitePage } from "./invite";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -167,6 +168,7 @@ function Screen() {
   const isSd = location.pathname === Path.Sd;
   const isSdNew = location.pathname === Path.SdNew;
   const isPurchase = location.pathname === Path.Purchase;
+  const isInvite = location.pathname === Path.Invite;
 
   const isMobileScreen = useMobileScreen();
   const shouldTightBorder =
@@ -186,6 +188,7 @@ function Screen() {
   const renderContent = () => {
     if (isAuth) return <AuthPage />;
     if (isPurchase) return <WindowContent><PurchasePage /></WindowContent>;
+    if (isInvite) return <WindowContent><InvitePage /></WindowContent>;
     if (isSd) return <Sd />;
     if (isSdNew) return <Sd />;
     return (
@@ -206,6 +209,7 @@ function Screen() {
             <Route path={Path.Settings} element={<Settings />} />
             <Route path={Path.McpMarket} element={<McpMarketPage />} />
             <Route path={Path.Purchase} element={<PurchasePage />} />
+            <Route path={Path.Invite} element={<InvitePage />} />
           </Routes>
         </WindowContent>
       </>

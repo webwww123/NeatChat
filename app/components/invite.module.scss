@@ -1,0 +1,136 @@
+.invite-page {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  max-width: 800px;
+  margin: 0 auto;
+  
+  .invite-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    animation: slide-in-from-top ease 0.3s;
+  }
+  
+  .invite-logo {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .invite-title {
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    text-align: center;
+    color: var(--primary);
+  }
+  
+  .invite-description {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 30px;
+    text-align: center;
+    max-width: 600px;
+    color: var(--black);
+  }
+  
+  .invite-code-container {
+    background-color: var(--second);
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    box-shadow: var(--card-shadow);
+    
+    .invite-code-label {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: var(--black);
+    }
+    
+    .invite-code {
+      font-size: 48px;
+      font-weight: bold;
+      letter-spacing: 5px;
+      margin: 15px 0;
+      color: var(--primary);
+      text-align: center;
+    }
+    
+    .invite-code-actions {
+      margin-top: 10px;
+    }
+  }
+  
+  .invite-instruction {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 20px;
+    
+    h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+    
+    ol {
+      padding-left: 20px;
+      
+      li {
+        margin-bottom: 10px;
+        line-height: 1.5;
+        
+        strong {
+          color: var(--primary);
+        }
+      }
+    }
+  }
+  
+  .invite-promotion-tips {
+    background-color: rgba(var(--primary-rgb), 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+    
+    p {
+      margin: 5px 0;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .invite-page {
+    padding: 10px;
+    
+    .invite-title {
+      font-size: 24px;
+    }
+    
+    .invite-description {
+      font-size: 14px;
+    }
+    
+    .invite-code-container {
+      .invite-code {
+        font-size: 36px;
+      }
+    }
+  }
+} 

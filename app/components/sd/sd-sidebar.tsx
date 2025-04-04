@@ -3,6 +3,7 @@ import GithubIcon from "@/app/icons/github.svg";
 import SDIcon from "@/app/icons/sd.svg";
 import ReturnIcon from "@/app/icons/return.svg";
 import HistoryIcon from "@/app/icons/history.svg";
+import KeyIcon from "@/app/icons/key.svg";
 import Locale from "@/app/locales";
 
 import { Path, REPO_URL } from "@/app/constant";
@@ -22,6 +23,7 @@ import { getParams, getModelParamBasicData } from "./sd-panel";
 import { useSdStore } from "@/app/store/sd";
 import { showToast } from "@/app/components/ui-lib";
 import { useMobileScreen } from "@/app/utils";
+import { useAccessStore } from "@/app/store";
 
 const SdPanel = dynamic(
   async () => (await import("@/app/components/sd")).SdPanel,
@@ -39,6 +41,7 @@ export function SideBar(props: { className?: string }) {
   const currentModel = sdStore.currentModel;
   const params = sdStore.currentParams;
   const setParams = sdStore.setCurrentParams;
+  const accessStore = useAccessStore();
 
   const handleSubmit = () => {
     const columns = getParams?.(currentModel, params);
@@ -65,6 +68,16 @@ export function SideBar(props: { className?: string }) {
       setParams(getModelParamBasicData(columns, params, true));
       navigate(Path.SdNew);
     });
+  };
+
+  const handleFreeClick = () => {
+    const accessCode = accessStore.accessCode;
+    if (!accessCode || accessCode.length === 0) {
+      showToast("请先填写访问秘钥");
+      navigate(Path.Auth);
+    } else {
+      navigate(Path.Invite);
+    }
   };
 
   return (
@@ -122,9 +135,13 @@ export function SideBar(props: { className?: string }) {
       </SideBarBody>
       <SideBarTail
         primaryAction={
-          <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
-            <IconButton icon={<GithubIcon />} shadow />
-          </a>
+          <IconButton
+            aria="免费使用"
+            text="Free"
+            type="primary"
+            onClick={handleFreeClick}
+            shadow
+          />
         }
         secondaryAction={
           <IconButton

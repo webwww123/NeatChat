@@ -13,6 +13,7 @@ import DiscoveryIcon from "../icons/discovery.svg";
 import NeatIcon from "../icons/neat.svg";
 import McpIcon from "../icons/mcp.svg";
 import LoadingIcon from "../icons/three-dots.svg";
+import KeyIcon from "../icons/key.svg";
 
 import Locale from "../locales";
 
@@ -31,7 +32,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { isIOS, useMobileScreen } from "../utils";
 import dynamic from "next/dynamic";
-import { showConfirm, SimpleSelector } from "./ui-lib";
+import { showConfirm, SimpleSelector, showToast } from "./ui-lib";
 import clsx from "clsx";
 import { isMcpEnabled, initializeMcpSystem } from "../mcp/actions";
 import { getClientConfig } from "../config/client";
@@ -247,6 +248,7 @@ export function SideBar(props: { className?: string }) {
   const config = useAppConfig();
   const chatStore = useChatStore();
   const [mcpEnabled, setMcpEnabled] = useState(false);
+  const accessStore = useAccessStore();
 
   useEffect(() => {
     console.log("[Config] got config from build time", getClientConfig());
@@ -276,6 +278,17 @@ export function SideBar(props: { className?: string }) {
     };
     checkMcpStatus();
   }, []);
+
+  // 检查是否有访问秘钥
+  const handleFreeClick = () => {
+    const accessCode = accessStore.accessCode;
+    if (!accessCode || accessCode.length === 0) {
+      showToast("请先填写访问秘钥");
+      navigate(Path.Auth);
+    } else {
+      navigate(Path.Invite);
+    }
+  };
 
   return (
     <SideBarContainer
@@ -319,6 +332,7 @@ export function SideBar(props: { className?: string }) {
             text={shouldNarrow ? undefined : Locale.Discovery.Name}
             className={styles["sidebar-bar-button"]}
             onClick={() => setShowPluginSelector(true)}
+
             shadow
           />
         </div>
@@ -371,13 +385,15 @@ export function SideBar(props: { className?: string }) {
               </Link>
             </div>
             <div className={styles["sidebar-action"]}>
-              <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
-                <IconButton
-                  aria={Locale.Export.MessageFromChatGPT}
-                  icon={<GithubIcon />}
-                  shadow
-                />
-              </a>
+              <IconButton
+                aria="免费使用"
+                text={shouldNarrow ? undefined : "Free"}
+                icon={shouldNarrow ? <KeyIcon /> : undefined}
+                className={styles["free-button"]}
+                onClick={handleFreeClick}
+                shadow
+                type="primary"
+              />
             </div>
           </>
         }
@@ -400,3 +416,4 @@ export function SideBar(props: { className?: string }) {
     </SideBarContainer>
   );
 }
+
