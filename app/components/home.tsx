@@ -185,7 +185,7 @@ function Screen() {
   }
   const renderContent = () => {
     if (isAuth) return <AuthPage />;
-    if (isPurchase) return <WindowContent><div className={styles["purchase-container"]}><PurchasePage /></div></WindowContent>;
+    if (isPurchase) return <WindowContent><PurchasePage /></WindowContent>;
     if (isSd) return <Sd />;
     if (isSdNew) return <Sd />;
     return (

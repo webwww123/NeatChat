@@ -62,6 +62,10 @@ export function PurchasePage() {
               <li>GPT-4o 不限量使用</li>
               <li>DeepSeek 全系列模型</li>
               <li>Gemini 全系列模型</li>
+              <li>共计160余模型</li>
+              <li>上传附件，图片</li>
+              <li>语音输入</li>
+              <li>可以破限开车</li>
               <li>会话本地存储</li>
               <li>绝对隐私保护</li>
             </ul>
@@ -85,6 +89,10 @@ export function PurchasePage() {
               <li>GPT-4o 不限量使用</li>
               <li>DeepSeek 全系列模型</li>
               <li>Gemini 全系列模型</li>
+              <li>共计160余模型</li>
+              <li>上传附件，图片</li>
+              <li>语音输入</li>
+              <li>可以破限开车</li>
               <li>会话本地存储</li>
               <li>绝对隐私保护</li>
               <li><strong>比月付更加优惠</strong></li>
