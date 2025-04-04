@@ -41,7 +41,7 @@ export function PurchasePage() {
 
       <div className={styles["purchase-title"]}>购买访问秘钥</div>
       <div className={styles["purchase-description"]}>
-        选择一个适合您的套餐，获得全部高级功能访问权限
+        无论哪个套餐都可以试用一天哦
       </div>
       
       <div className={styles["referral-info-highlight"]}>
@@ -59,13 +59,13 @@ export function PurchasePage() {
           <div className={styles["plan-price"]}>¥55</div>
           <div className={styles["plan-features"]}>
             <ul>
-              <li>GPT-4o 不限量使用</li>
+              <li className={styles["feature-highlight"]}>🔥 GPT-4o 不限量使用 🔥</li>
               <li>DeepSeek 全系列模型</li>
               <li>Gemini 全系列模型</li>
               <li>共计160余模型</li>
               <li>上传附件，图片</li>
               <li>语音输入</li>
-              <li>可以破限开车</li>
+              <li className={styles["feature-highlight"]}>🚀 可以破限开车 🚀</li>
               <li>会话本地存储</li>
               <li>云端多端同步</li>
               <li>绝对隐私保护</li>
@@ -88,13 +88,13 @@ export function PurchasePage() {
           <div className={styles["plan-price"]}>¥140</div>
           <div className={styles["plan-features"]}>
             <ul>
-              <li>GPT-4o 不限量使用</li>
+              <li className={styles["feature-highlight"]}>🔥 GPT-4o 不限量使用 🔥</li>
               <li>DeepSeek 全系列模型</li>
               <li>Gemini 全系列模型</li>
               <li>共计160余模型</li>
               <li>上传附件，图片</li>
               <li>语音输入</li>
-              <li>可以破限开车</li>
+              <li className={styles["feature-highlight"]}>🚀 可以破限开车 🚀</li>
               <li>会话本地存储</li>
               <li>云端多端同步</li>
               <li>绝对隐私保护</li>

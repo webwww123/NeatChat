@@ -155,6 +155,37 @@
   }
 }
 
+.feature-highlight {
+  font-weight: bold !important;
+  color: var(--primary) !important;
+  font-size: 1.05em !important;
+  padding: 5px 8px !important;
+  margin: 3px -8px !important;
+  background-color: rgba(var(--primary-rgb), 0.1) !important;
+  border-radius: 6px !important;
+  position: relative !important;
+  
+  &::before {
+    color: var(--primary) !important;
+    font-size: 1.1em !important;
+  }
+  
+  // 添加微弱脉冲动画效果
+  animation: feature-pulse 2s infinite !important;
+}
+
+@keyframes feature-pulse {
+  0% {
+    background-color: rgba(var(--primary-rgb), 0.1);
+  }
+  50% {
+    background-color: rgba(var(--primary-rgb), 0.2);
+  }
+  100% {
+    background-color: rgba(var(--primary-rgb), 0.1);
+  }
+}
+
 .plan-button {
   width: 100%;
   padding: 10px;
