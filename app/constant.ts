@@ -1,5 +1,5 @@
 export const OWNER = "tianzhentech";
-export const REPO = "NeatChat";
+export const REPO = "HanBaoChat";
 export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 export const PLUGINS_REPO_URL = `https://github.com/ChatGPTNextWeb/NextChat-Awesome-Plugins`;
 export const ISSUE_URL = `https://github.com/${OWNER}/${REPO}/issues`;
@@ -104,7 +104,7 @@ export const ACCESS_CODE_PREFIX = "nk-";
 export const LAST_INPUT_KEY = "last-input";
 export const UNFINISHED_INPUT = (id: string) => "unfinished-input-" + id;
 
-export const STORAGE_KEY = "NeatChat";
+export const STORAGE_KEY = "HanBaoChat";
 
 export const REQUEST_TIMEOUT_MS = 60000;
 

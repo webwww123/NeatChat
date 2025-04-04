@@ -4,7 +4,6 @@ import { IconButton } from "./button";
 import { useNavigate } from "react-router-dom";
 import { Path } from "../constant";
 import Locale from "../locales";
-import NeatIcon from "../icons/neat.svg";
 import LeftIcon from "@/app/icons/left.svg";
 import clsx from "clsx";
 import { Modal, showModal } from "./ui-lib";
@@ -63,7 +62,7 @@ export function PurchasePage() {
       </div>
 
       <div className={clsx("no-dark", styles["purchase-logo"])}>
-        <NeatIcon width={50} height={50} />
+        <img src="/汉堡.png" width={50} height={50} alt="HanBaoChat Logo" />
       </div>
 
       <div className={styles["purchase-title"]}>购买访问秘钥</div>
@@ -138,7 +137,7 @@ export function PurchasePage() {
       </div>
 
       <div className={styles["purchase-footer"]}>
-        © {new Date().getFullYear()} NeatChat - 让您的AI体验更加智能
+        © {new Date().getFullYear()} HanBaoChat - 让您的AI体验更加智能
       </div>
     </div>
   );

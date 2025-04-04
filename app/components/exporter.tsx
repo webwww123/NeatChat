@@ -38,6 +38,7 @@ import { type ClientApi, getClientApi } from "../client/api";
 import { getMessageTextContent } from "../utils";
 import clsx from "clsx";
 import { MaskAvatar } from "./mask";
+import HanBaoIcon from "../icons/hanbao.svg";
 
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
@@ -513,13 +514,13 @@ export function ImagePreviewer(props: {
       >
         <div className={styles["chat-info"]}>
           <div className={clsx(styles["logo"], "no-dark")}>
-            <NeatIcon width={50} height={50} />
+            <img src="/汉堡.png" width={50} height={50} alt="HanBaoChat Logo" />
           </div>
 
           <div>
-            <div className={styles["main-title"]}>NeatChat</div>
+            <div className={styles["main-title"]}>HanBaoChat</div>
             <div className={styles["sub-title"]}>
-              github.com/tianzhentech/NeatChat
+              github.com/tianzhentech/HanBaoChat
             </div>
           </div>
           <div>

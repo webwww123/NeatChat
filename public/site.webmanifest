@@ -1,14 +1,14 @@
 {
-  "name": "NeatChat",
-  "short_name": "NeatChat",
+  "name": "HanBaoChat",
+  "short_name": "HanBaoChat",
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/汉堡.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
+      "src": "/汉堡.png",
       "sizes": "512x512",
       "type": "image/png"
     }

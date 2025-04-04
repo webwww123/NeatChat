@@ -239,7 +239,7 @@ export function Artifacts() {
           shadow
           onClick={() => previewRef.current?.reload()}
         />
-        <div className={styles["artifacts-title"]}>NeatChat Artifacts</div>
+        <div className={styles["artifacts-title"]}>HanBaoChat Artifacts</div>
         <ArtifactsShareButton
           id={id}
           getCode={() => code}

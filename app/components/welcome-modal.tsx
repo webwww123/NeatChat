@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./welcome-modal.module.scss";
 import { IconButton } from "./button";
 import CloseIcon from "../icons/close.svg";
-import NeatIcon from "../icons/neat.svg";
 import LightningIcon from "../icons/lightning.svg";
 import FireIcon from "../icons/fire.svg";
 import clsx from "clsx";
@@ -52,8 +51,8 @@ export function WelcomeModal() {
       <div className={styles["welcome-container"]}>
         <div className={styles["welcome-header"]}>
           <div className={styles["welcome-logo"]}>
-            <NeatIcon width={40} height={40} />
-            <div className={styles["welcome-title"]}>欢迎使用 NeatChat</div>
+            <img src="/汉堡.png" width={40} height={40} alt="HanBaoChat Logo" />
+            <div className={styles["welcome-title"]}>欢迎使用 HanBaoChat</div>
           </div>
           <IconButton
             icon={<CloseIcon />}
