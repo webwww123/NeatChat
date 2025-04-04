@@ -8,10 +8,10 @@ const cn = {
   Error: {
     Unauthorized: isApp
       ? `😆 你还没有输入访问秘钥呢！请输入访问秘钥或联系客服小哥（其实就是开发者）购买秘钥哦！
-本站gpt4o不限量，deepseek，gemni全系可用哦~:
+本站gpt4o不限量，deepseek，gemni全系可用哦~
        \\ 1️⃣ 如果你想消耗自己的 API 资源，点击[这里](/#/settings)修改设置 ⚙️`
       : `😆 你还没有输入访问秘钥呢！请输入访问秘钥或联系客服小哥（其实就是开发者）购买秘钥哦！
-本站gpt4o不限量，deepseek，gemni全系可用哦~:
+本站gpt4o不限量，deepseek，gemni全系可用哦~
        \ 1️⃣ 点击[这里](/#/auth)输入访问秘钥 🔑
        \ 2️⃣ 如果你想消耗自己的 API 资源，点击[这里](/#/settings)修改设置 ⚙️
        `,
