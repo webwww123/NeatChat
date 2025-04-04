@@ -32,6 +32,7 @@ import clsx from "clsx";
 import { initializeMcpSystem, isMcpEnabled } from "../mcp/actions";
 import { PurchasePage } from "./purchase";
 import { InvitePage } from "./invite";
+import { WelcomeModal } from "./welcome-modal";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -274,6 +275,7 @@ export function Home() {
     <ErrorBoundary>
       <Router>
         <Screen />
+        <WelcomeModal />
       </Router>
     </ErrorBoundary>
   );
