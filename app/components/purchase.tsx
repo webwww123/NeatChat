@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./purchase.module.scss";
 import { IconButton } from "./button";
 import { useNavigate } from "react-router-dom";
@@ -7,16 +7,34 @@ import Locale from "../locales";
 import NeatIcon from "../icons/neat.svg";
 import LeftIcon from "@/app/icons/left.svg";
 import clsx from "clsx";
-import { Modal } from "./ui-lib";
+import { Modal, showModal } from "./ui-lib";
 
 export function PurchasePage() {
   const navigate = useNavigate();
-  const [showQrModal, setShowQrModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<string>("");
+  const closeModalRef = useRef<() => void>();
 
   const handlePlanSelection = (planName: string) => {
     setSelectedPlan(planName);
-    setShowQrModal(true);
+    
+    // 使用showModal函数弹出模态框
+    closeModalRef.current = showModal({
+      title: `扫码联系客服购买${planName}`,
+      children: (
+        <div className={styles["modal-content"]}>
+          <div className={styles["modal-title"]}>
+            添加客服微信完成购买
+          </div>
+          <div className={styles["contact-qrcode"]}>
+            <img src="/wechat-qrcode.png" alt="微信二维码" />
+            <p>扫码添加好友（24小时在线处理）</p>
+          </div>
+        </div>
+      ),
+      onClose: () => {
+        closeModalRef.current = undefined;
+      }
+    });
   };
 
   // 当点击按钮时处理
@@ -24,6 +42,15 @@ export function PurchasePage() {
     e.stopPropagation(); // 阻止事件冒泡到卡片
     handlePlanSelection(planName);
   };
+
+  // 组件卸载时关闭模态框
+  useEffect(() => {
+    return () => {
+      if (closeModalRef.current) {
+        closeModalRef.current();
+      }
+    };
+  }, []);
 
   return (
     <div className={styles["purchase-page"]}>
@@ -113,23 +140,6 @@ export function PurchasePage() {
       <div className={styles["purchase-footer"]}>
         © {new Date().getFullYear()} NeatChat - 让您的AI体验更加智能
       </div>
-
-      {showQrModal && (
-        <Modal
-          title={`扫码联系客服购买${selectedPlan}`}
-          onClose={() => setShowQrModal(false)}
-        >
-          <div className={styles["modal-content"]}>
-            <div className={styles["modal-title"]}>
-              添加客服微信完成购买
-            </div>
-            <div className={styles["contact-qrcode"]}>
-              <img src="/wechat-qrcode.png" alt="微信二维码" />
-              <p>扫码添加好友（24小时在线处理）</p>
-            </div>
-          </div>
-        </Modal>
-      )}
     </div>
   );
 } 

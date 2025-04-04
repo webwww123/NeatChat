@@ -202,7 +202,19 @@ export function showModal(props: {
     }
   };
 
-  root.render(<Modal {...props} onClose={closeModal}></Modal>);
+  root.render(
+    <Modal
+      title={props.title}
+      actions={props.actions}
+      defaultMax={props.defaultMax}
+      footer={props.footer}
+      onClose={closeModal}
+    >
+      {props.children}
+    </Modal>,
+  );
+
+  return closeModal;
 }
 
 export type ToastProps = {
