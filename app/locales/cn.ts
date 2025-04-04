@@ -8,19 +8,16 @@ const cn = {
   Error: {
     Unauthorized: isApp
       ? `😆 你还没有输入访问秘钥呢！请输入访问秘钥或联系客服小哥（其实就是开发者）购买秘钥哦！
-本站pro会员gpt4o不限量，deepseek，gemni全系可用哦~
-       \\ 1️⃣ 如果你想消耗自己的 API 资源，点击[这里](/#/settings)修改设置 ⚙️`
+本站pro会员gpt4o不限量，deepseek，gemni全系可用哦~`
       : `😆 你还没有输入访问秘钥呢！请输入访问秘钥或联系客服小哥（其实就是开发者）购买秘钥哦！
 本站pro会员gpt4o不限量，deepseek，gemni全系可用哦~
-       \ 1️⃣ 点击[这里](/#/auth)输入访问秘钥 🔑
-       \ 2️⃣ 如果你想消耗自己的 API 资源，点击[这里](/#/settings)修改设置 ⚙️
+       \\ 1️⃣ 点击[这里](/#/auth)输入访问秘钥 🔑 或 [点击这里购买秘钥](/#/purchase) 🛒
        `,
   },
   Auth: {
     Return: "返回",
     Title: "需要密码",
     Tips: "管理员开启了密码验证，请在下方填入访问码",
-    SubTips: "或者输入你的 OpenAI 或 Google AI 密钥",
     Input: "在此处填写访问码",
     Confirm: "确认",
     Later: "稍后再说",
