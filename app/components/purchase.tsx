@@ -67,7 +67,9 @@ export function PurchasePage() {
               <li>语音输入</li>
               <li>可以破限开车</li>
               <li>会话本地存储</li>
+              <li>云端多端同步</li>
               <li>绝对隐私保护</li>
+              <li><strong>比季付更加便宜</strong></li>
             </ul>
           </div>
           <button 
@@ -94,6 +96,7 @@ export function PurchasePage() {
               <li>语音输入</li>
               <li>可以破限开车</li>
               <li>会话本地存储</li>
+              <li>云端多端同步</li>
               <li>绝对隐私保护</li>
               <li><strong>比月付更加优惠</strong></li>
             </ul>
