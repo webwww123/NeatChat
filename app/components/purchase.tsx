@@ -45,8 +45,9 @@ export function PurchasePage() {
       </div>
       
       <div className={styles["referral-info-highlight"]}>
-        <div className={styles["referral-title"]}>邀请好友共享福利！</div>
-        <p>如果您是通过朋友邀请来的，请在购买时告知客服您朋友的邀请码，您和您的朋友都将获得<strong>额外10天</strong>的使用时间！</p>
+        <div className={styles["referral-title"]}>有邀请码各加十天！</div>
+        <p>如果有的话，请在购买时告知客服推荐你购买的人的邀请码，这话有点拗口。
+          反正您和您的朋友都将获得<strong>额外10天</strong>的使用时间！</p>
       </div>
 
       <div className={styles["purchase-plans"]}>
