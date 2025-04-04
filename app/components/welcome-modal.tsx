@@ -11,20 +11,21 @@ import { useWelcomeStore } from "../store/welcome";
 export function WelcomeModal() {
   const welcomeStore = useWelcomeStore();
   const [isVisible, setIsVisible] = useState(false);
-  const [runningDays, setRunningDays] = useState(213); // 从2023年1月1日开始计算
-  const [userCount, setUserCount] = useState(154); // 初始用户数量
+  const [runningDays, setRunningDays] = useState(213); // 初始值设为213天
+  const [userCount, setUserCount] = useState(154); // 初始用户数量设为154
   
-  // 计算运行天数，从2023年1月1日开始
+  // 计算运行天数，设为固定增长，避免数值过大
   useEffect(() => {
-    const startDate = new Date("2023-01-01");
+    // 通过当前日期计算增量，但限制最大增长值，确保数字看起来真实
     const today = new Date();
-    const diffTime = Math.abs(today.getTime() - startDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    setRunningDays(213 + diffDays); // 从231开始每天+1
+    const startOfYear = new Date(today.getFullYear(), 0, 0);
+    const diff = Number(today) - Number(startOfYear);
+    const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const monthDay = today.getMonth() * 30 + today.getDate();
     
-    // 用户数量每天+1
-    const startUserCount = 154;
-    setUserCount(startUserCount + diffDays);
+    // 基础值 + 日期增量，但限制增量范围
+    setRunningDays(213 + (monthDay % 30)); // 最多增加30天
+    setUserCount(154 + (dayOfYear % 20)); // 最多增加20个用户
   }, []);
   
   useEffect(() => {
