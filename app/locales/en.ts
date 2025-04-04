@@ -8,18 +8,15 @@ const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
     Unauthorized: isApp
-      ? `😆 Oops, there's an issue. No worries:
-     \\ 1️⃣ Want to use your own API resources? [Click here](/#/settings) to change settings ⚙️`
-      : `😆 Oops, there's an issue. Let's fix it:
-     \ 1️⃣ [Click here](/#/auth) to enter your key 🔑
-     \ 2️⃣ Want to use your own API resources? [Click here](/#/settings) to change settings ⚙️
+      ? `😆 Oops, you haven't entered an access key. Please enter an access key or contact customer service (the developer) to purchase a key.`
+      : `😆 Oops, you haven't entered an access key. Please enter an access key or contact customer service (the developer) to purchase a key.
+     \ 1️⃣ [Click here](/#/auth) to enter your key 🔑 or [Click here to buy a key](/#/purchase) 🛒
      `,
   },
   Auth: {
     Return: "Return",
     Title: "Need Access Code",
     Tips: "Please enter access code below",
-    SubTips: "Or enter your OpenAI or Google API Key",
     Input: "access code",
     Confirm: "Confirm",
     Later: "Later",
