@@ -128,16 +128,6 @@ export const getServerSideConfig = () => {
   let defaultModel = process.env.DEFAULT_MODEL ?? "";
 
   if (disableGPT4) {
-    if (customModels) customModels += ",";
-    customModels += DEFAULT_MODELS.filter(
-      (m) =>
-        (m.name.startsWith("gpt-4") ||
-          m.name.startsWith("chatgpt-4o") ||
-          m.name.startsWith("o1")) &&
-        !m.name.startsWith("gpt-4o-mini"),
-    )
-      .map((m) => "-" + m.name)
-      .join(",");
     if (
       (defaultModel.startsWith("gpt-4") ||
         defaultModel.startsWith("chatgpt-4o") ||

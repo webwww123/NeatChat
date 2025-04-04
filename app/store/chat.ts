@@ -138,16 +138,12 @@ function countMessages(msgs: ChatMessage[]) {
 function fillTemplateWith(input: string, modelConfig: ModelConfig) {
   const cutoff =
     KnowledgeCutOffDate[modelConfig.model] ?? KnowledgeCutOffDate.default;
-  // Find the model in the DEFAULT_MODELS array that matches the modelConfig.model
-  const modelInfo = DEFAULT_MODELS.find((m) => m.name === modelConfig.model);
+  
+  // 由于DEFAULT_MODELS可能为空数组，不再使用find方法
+  // const modelInfo = DEFAULT_MODELS.find((m) => m.name === modelConfig.model);
 
-  var serviceProvider = "OpenAI";
-  if (modelInfo) {
-    // TODO: auto detect the providerName from the modelConfig.model
-
-    // Directly use the providerName from the modelInfo
-    serviceProvider = modelInfo.provider.providerName;
-  }
+  // 根据modelConfig中的providerName确定服务提供商
+  var serviceProvider = modelConfig.providerName || "OpenAI";
 
   const vars = {
     ServiceProvider: serviceProvider,

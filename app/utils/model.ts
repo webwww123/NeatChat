@@ -199,6 +199,19 @@ export function isModelAvailableInServer(
   providerName: string,
 ) {
   const fullName = `${modelName}@${providerName}`;
-  const modelTable = collectModelTable(DEFAULT_MODELS, customModels);
-  return modelTable[fullName]?.available === false;
+  
+  // 当DEFAULT_MODELS为空数组时，这个函数应该根据customModels来判断
+  // 如果customModels中明确包含"-模型名"，则返回true（表示不可用）
+  // 否则默认返回false（表示可用）
+  if (customModels.includes(`-${modelName}`)) {
+    return true;
+  }
+  
+  // 只有当有定义的模型时才使用collectModelTable
+  if (DEFAULT_MODELS.length > 0) {
+    const modelTable = collectModelTable(DEFAULT_MODELS, customModels);
+    return modelTable[fullName]?.available === false;
+  }
+  
+  return false;
 }
