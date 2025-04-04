@@ -43,6 +43,11 @@ export function PurchasePage() {
       <div className={styles["purchase-description"]}>
         选择一个适合您的套餐，获得全部高级功能访问权限
       </div>
+      
+      <div className={styles["referral-info-highlight"]}>
+        <div className={styles["referral-title"]}>邀请好友共享福利！</div>
+        <p>如果您是通过朋友邀请来的，请在购买时告知客服您朋友的邀请码，您和您的朋友都将获得<strong>额外10天</strong>的使用时间！</p>
+      </div>
 
       <div className={styles["purchase-plans"]}>
         <div 
@@ -91,10 +96,6 @@ export function PurchasePage() {
             选择此套餐
           </button>
         </div>
-      </div>
-
-      <div className={styles["referral-info"]}>
-        <p>邀请好友共享福利！如果您是通过朋友邀请来的，请在购买时告知客服您朋友的邀请码，您和您的朋友都将获得<strong>额外10天</strong>的使用时间！</p>
       </div>
 
       <div className={styles["purchase-footer"]}>

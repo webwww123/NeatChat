@@ -368,3 +368,13 @@
 .rtl-screen {
   direction: rtl;
 }
+
+.purchase-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+  overflow-y: auto;
+}
