@@ -3,6 +3,8 @@ import styles from "./welcome-modal.module.scss";
 import { IconButton } from "./button";
 import CloseIcon from "../icons/close.svg";
 import NeatIcon from "../icons/neat.svg";
+import LightningIcon from "../icons/lightning.svg";
+import FireIcon from "../icons/fire.svg";
 import clsx from "clsx";
 import { useWelcomeStore } from "../store/welcome";
 
@@ -64,12 +66,22 @@ export function WelcomeModal() {
             此为GPT-4o、Gemini全系列、DeepSeek稳定镜像站
           </div>
           
-          <div className={styles["welcome-features"]}>
-            <div className={clsx(styles["feature-item"], styles["feature-primary"])}>
-              <span className={styles["feature-badge"]}>重要</span>
-              <span className={styles["feature-text"]}>Pro会员GPT-4o不限量使用！</span>
+          <div className={styles["pro-highlight"]}>
+            <div className={styles["highlight-icons"]}>
+              <LightningIcon className={styles["highlight-icon-left"]} />
+              <FireIcon className={styles["highlight-icon-right"]} />
             </div>
-            
+            <div className={styles["pro-highlight-content"]}>
+              <span className={styles["pro-text"]}>Pro会员</span>
+              <div className={styles["gpt4o-container"]}>
+                <span className={styles["gpt4o-text"]}>GPT-4o</span>
+              </div>
+              <span className={styles["unlimited-text"]}>不限量使用！</span>
+            </div>
+            <div className={styles["highlight-background"]}></div>
+          </div>
+          
+          <div className={styles["welcome-features"]}>
             <div className={styles["feature-item"]}>
               <span className={styles["feature-text"]}>无需魔法，多端通用，可以破限开车</span>
             </div>
