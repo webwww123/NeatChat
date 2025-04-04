@@ -19,6 +19,12 @@ export function PurchasePage() {
     setShowQrModal(true);
   };
 
+  // 当点击按钮时处理
+  const handleButtonClick = (e: React.MouseEvent, planName: string) => {
+    e.stopPropagation(); // 阻止事件冒泡到卡片
+    handlePlanSelection(planName);
+  };
+
   return (
     <div className={styles["purchase-page"]}>
       <div className={styles["purchase-header"]}>
@@ -54,7 +60,12 @@ export function PurchasePage() {
               <li>绝对隐私保护</li>
             </ul>
           </div>
-          <button className={styles["plan-button"]}>选择此套餐</button>
+          <button 
+            className={styles["plan-button"]}
+            onClick={(e) => handleButtonClick(e, "月付套餐")}
+          >
+            选择此套餐
+          </button>
         </div>
 
         <div 
@@ -73,7 +84,12 @@ export function PurchasePage() {
               <li><strong>比月付更加优惠</strong></li>
             </ul>
           </div>
-          <button className={styles["plan-button"]}>选择此套餐</button>
+          <button 
+            className={styles["plan-button"]}
+            onClick={(e) => handleButtonClick(e, "季付套餐")}
+          >
+            选择此套餐
+          </button>
         </div>
       </div>
 
