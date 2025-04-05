@@ -21,6 +21,16 @@ export default function App() {
         console.log("MCP initialized successfully");
       });
     }
+    
+    // 初始化数据库
+    fetch('/api/init-db')
+      .then(res => res.json())
+      .then(data => {
+        console.log('数据库初始化:', data.message);
+      })
+      .catch(err => {
+        console.error('数据库初始化失败:', err);
+      });
   }, [mcpInitialized]);
 
   return (

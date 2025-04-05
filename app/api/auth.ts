@@ -2,6 +2,10 @@ import { NextRequest } from "next/server";
 import { getServerSideConfig } from "../config/server";
 import md5 from "spark-md5";
 import { ACCESS_CODE_PREFIX, ModelProvider } from "../constant";
+import { validateAccessCode } from "../db/models/accessCode";
+
+// 添加 Node.js 运行时声明
+export const runtime = 'nodejs';
 
 function getIP(req: NextRequest) {
   let ip = req.ip ?? req.headers.get("x-real-ip");
@@ -24,7 +28,7 @@ function parseApiKey(bearToken: string) {
   };
 }
 
-export function auth(req: NextRequest, modelProvider: ModelProvider) {
+export async function auth(req: NextRequest, modelProvider: ModelProvider) {
   const authToken = req.headers.get("Authorization") ?? "";
 
   // check if it is openai api key or user token
@@ -39,7 +43,21 @@ export function auth(req: NextRequest, modelProvider: ModelProvider) {
   console.log("[User IP] ", getIP(req));
   console.log("[Time] ", new Date().toLocaleString());
 
-  if (serverConfig.needCode && !serverConfig.codes.has(hashedCode) && !apiKey) {
+  // 首先尝试使用数据库验证访问码
+  let isValidCode = false;
+  if (accessCode) {
+    try {
+      isValidCode = await validateAccessCode(accessCode);
+      console.log("[Auth] 数据库验证结果:", isValidCode ? "有效" : "无效");
+    } catch (error) {
+      console.error("[Auth] 数据库验证错误:", error);
+      // 如果数据库验证失败，回退到环境变量方式
+      isValidCode = false;
+    }
+  }
+
+  // 如果数据库验证失败，回退到环境变量方式
+  if (!isValidCode && serverConfig.needCode && !serverConfig.codes.has(hashedCode) && !apiKey) {
     return {
       error: true,
       msg: !accessCode ? "empty access code" : "wrong access code",
@@ -56,13 +74,6 @@ export function auth(req: NextRequest, modelProvider: ModelProvider) {
   // if user does not provide an api key, inject system api key
   if (!apiKey) {
     const serverConfig = getServerSideConfig();
-
-    // const systemApiKey =
-    //   modelProvider === ModelProvider.GeminiPro
-    //     ? serverConfig.googleApiKey
-    //     : serverConfig.isAzure
-    //     ? serverConfig.azureApiKey
-    //     : serverConfig.apiKey;
 
     let systemApiKey: string | undefined;
 
