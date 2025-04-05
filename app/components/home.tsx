@@ -5,7 +5,7 @@ require("../polyfill");
 import { useState, useEffect } from "react";
 import styles from "./home.module.scss";
 
-import NeatIcon from "../icons/neat.svg";
+import hanbaoLogo from "../icons/汉堡.png";
 import LoadingIcon from "../icons/three-dots.svg";
 
 import { getCSSVar, useMobileScreen } from "../utils";
@@ -37,8 +37,11 @@ import { WelcomeModal } from "./welcome-modal";
 export function Loading(props: { noLogo?: boolean }) {
   return (
     <div className={clsx("no-dark", styles["loading-content"])}>
-      {!props.noLogo && <NeatIcon width={30} height={30} />}
+      {!props.noLogo && (
+        <img src={hanbaoLogo.src} alt="汉堡Logo" width={44} height={44} />
+      )}
       <LoadingIcon />
+      <div className={styles["loading-text"]}>首次加载可能需要十秒钟...</div>
     </div>
   );
 }

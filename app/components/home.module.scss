@@ -381,6 +381,14 @@
   align-items: center;
   height: 100%;
   width: 100%;
+  
+  .loading-text {
+    margin-top: 15px;
+    font-size: 14px;
+    color: var(--primary);
+    font-weight: 500;
+    opacity: 0.8;
+  }
 }
 
 .rtl-screen {
