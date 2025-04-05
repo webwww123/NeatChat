@@ -8,8 +8,8 @@ console.log("[Next] build mode", mode);
 const disableChunk = !!process.env.DISABLE_CHUNK || mode === "export";
 console.log("[Next] build with chunk: ", !disableChunk);
 
-// 使用 next-transpile-modules 包装配置
-const withTM = withTranspileModules(['pg', 'pg-native', 'pg-pool']);
+// 使用 next-transpile-modules 包装配置，移除 pg-native
+const withTM = withTranspileModules(['pg', 'pg-pool']);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -36,7 +36,6 @@ const nextConfig = {
       util: false,
       net: false,
       tls: false,
-      'pg-native': false,
     };
 
     return config;
@@ -57,7 +56,7 @@ const nextConfig = {
       '@hello-pangea/dnd',
       'mermaid',
     ],
-    serverComponentsExternalPackages: ["pg", "pg-native", "pg-pool"],
+    serverComponentsExternalPackages: ["pg", "pg-pool"],
     serverActions: {
       bodySizeLimit: '4mb',
     },
