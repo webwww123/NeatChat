@@ -3,11 +3,11 @@ import md5 from 'spark-md5';
 
 // 创建数据库连接池
 const pool = new Pool({
-  user: 'avnadmin',
-  password: 'AVNS_K9XfCzZysO7sitzpMXs',
-  host: 'pg-25119ddc-ngnggao5-8823.h.aivencloud.com',
-  port: 27089,
-  database: 'defaultdb',
+  user: process.env.DB_USER || 'avnadmin',
+  password: process.env.DB_PASSWORD || '',
+  host: process.env.DB_HOST || '',
+  port: parseInt(process.env.DB_PORT || '5432'),
+  database: process.env.DB_NAME || 'defaultdb',
   ssl: {
     rejectUnauthorized: false
   }
