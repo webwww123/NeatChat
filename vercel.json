@@ -7,7 +7,7 @@
     "framework": "nextjs",
     "outputDirectory": ".next",
     "functions": {
-        "api/**/*": {
+        "app/api/**/*": {
             "runtime": "nodejs18.x@1.0.0"
         }
     }
