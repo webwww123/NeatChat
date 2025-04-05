@@ -254,27 +254,15 @@ export function SideBar(props: { className?: string }) {
     console.log("[Config] got config from build time", getClientConfig());
     useAccessStore.getState().fetch();
 
-    const initMcp = async () => {
+    // 不再完整初始化MCP，只进行状态检查
+    const checkMcpStatus = async () => {
       try {
         const enabled = await isMcpEnabled();
-        if (enabled) {
-          console.log("[MCP] initializing...");
-          await initializeMcpSystem();
-          console.log("[MCP] initialized");
-        }
+        setMcpEnabled(enabled);
+        console.log("[SideBar] MCP enabled:", enabled);
       } catch (err) {
-        console.error("[MCP] failed to initialize:", err);
+        console.error("[MCP] failed to check status:", err);
       }
-    };
-    initMcp();
-  }, []);
-
-  useEffect(() => {
-    // 检查 MCP 是否启用
-    const checkMcpStatus = async () => {
-      const enabled = await isMcpEnabled();
-      setMcpEnabled(enabled);
-      console.log("[SideBar] MCP enabled:", enabled);
     };
     checkMcpStatus();
   }, []);

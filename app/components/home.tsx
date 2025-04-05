@@ -33,6 +33,8 @@ import { initializeMcpSystem, isMcpEnabled } from "../mcp/actions";
 import { PurchasePage } from "./purchase";
 import { InvitePage } from "./invite";
 import { WelcomeModal } from "./welcome-modal";
+import { Chat } from "./chat";
+import { NewChat } from "./new-chat";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -41,50 +43,49 @@ export function Loading(props: { noLogo?: boolean }) {
         <img src={hanbaoLogo.src} alt="汉堡Logo" width={44} height={44} />
       )}
       <LoadingIcon />
-      <div className={styles["loading-text"]}>首次加载可能需要十秒钟...</div>
+      <div className={styles["loading-text"]}>正在加载中，请稍候...</div>
     </div>
   );
 }
 
 const Artifacts = dynamic(async () => (await import("./artifacts")).Artifacts, {
   loading: () => <Loading noLogo />,
+  ssr: false,
 });
 
 const Settings = dynamic(async () => (await import("./settings")).Settings, {
   loading: () => <Loading noLogo />,
-});
-
-const Chat = dynamic(async () => (await import("./chat")).Chat, {
-  loading: () => <Loading noLogo />,
-});
-
-const NewChat = dynamic(async () => (await import("./new-chat")).NewChat, {
-  loading: () => <Loading noLogo />,
+  ssr: false,
 });
 
 const MaskPage = dynamic(async () => (await import("./mask")).MaskPage, {
   loading: () => <Loading noLogo />,
+  ssr: false,
 });
 
 const PluginPage = dynamic(async () => (await import("./plugin")).PluginPage, {
   loading: () => <Loading noLogo />,
+  ssr: false,
 });
 
 const SearchChat = dynamic(
   async () => (await import("./search-chat")).SearchChatPage,
   {
     loading: () => <Loading noLogo />,
+    ssr: false,
   },
 );
 
 const Sd = dynamic(async () => (await import("./sd")).Sd, {
   loading: () => <Loading noLogo />,
+  ssr: false,
 });
 
 const McpMarketPage = dynamic(
   async () => (await import("./mcp-market")).McpMarketPage,
   {
     loading: () => <Loading noLogo />,
+    ssr: false,
   },
 );
 
@@ -141,6 +142,19 @@ const useHasHydrated = () => {
 };
 
 const loadAsyncGoogleFont = () => {
+  // 添加资源预连接，让浏览器提前建立连接
+  const preconnectEl = document.createElement("link");
+  preconnectEl.rel = "preconnect";
+  preconnectEl.href = "https://fonts.googleapis.com";
+  document.head.appendChild(preconnectEl);
+  
+  const preconnectEl2 = document.createElement("link");
+  preconnectEl2.rel = "preconnect";
+  preconnectEl2.href = "https://fonts.gstatic.com";
+  preconnectEl2.crossOrigin = "anonymous";
+  document.head.appendChild(preconnectEl2);
+
+  // 添加字体样式，使用较小子集以加快加载
   const linkEl = document.createElement("link");
   const proxyFontUrl = "/google-fonts";
   const remoteFontUrl = "https://fonts.googleapis.com";
@@ -150,8 +164,11 @@ const loadAsyncGoogleFont = () => {
   linkEl.href =
     googleFontUrl +
     "/css2?family=" +
-    encodeURIComponent("Noto Sans:wght@300;400;700;900") +
-    "&display=swap";
+    encodeURIComponent("Noto Sans:wght@400;700&display=swap");
+  linkEl.media = "print";
+  linkEl.onload = () => {
+    linkEl.media = "all";
+  };
   document.head.appendChild(linkEl);
 };
 

@@ -29,10 +29,23 @@ const nextConfig = {
   output: mode,
   images: {
     unoptimized: mode === "export",
+    deviceSizes: [640, 750, 828, 1080, 1200],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    formats: ['image/webp'],
   },
   experimental: {
     forceSwcTransforms: true,
+    optimizePackageImports: [
+      'react-markdown', 
+      'lodash-es',
+      'emoji-picker-react',
+      '@hello-pangea/dnd',
+      'mermaid',
+    ],
   },
+  compress: true,
+  staticPageGenerationTimeout: 180,
+  poweredByHeader: false,
 };
 
 const CorsHeaders = [

@@ -20,6 +20,29 @@ const fontStyleOptimization = `
   }
 `;
 
+// 添加空闲时预加载策略
+const preloadScript = `
+  (function() {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(function() {
+        // 预加载主要组件
+        const preloadLinks = [
+          '/chat',
+          '/new-chat',
+          '/settings'
+        ];
+        
+        preloadLinks.forEach(function(href) {
+          const link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.href = href;
+          document.head.appendChild(link);
+        });
+      }, { timeout: 2000 });
+    }
+  })();
+`;
+
 export const metadata: Metadata = {
   title: "HanBaoChat",
   description: "Your personal ChatGPT Chat Bot.",
@@ -70,6 +93,7 @@ export default function RootLayout({
             }
           `}
         </style>
+        <script dangerouslySetInnerHTML={{ __html: preloadScript }} />
       </head>
       <body suppressHydrationWarning={true}>
         <McpInitializer />
