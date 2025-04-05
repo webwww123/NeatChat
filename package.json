@@ -89,6 +89,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^15.5.0",
+    "next-transpile-modules": "^10.0.1",
     "pg": "^8.14.1",
     "prettier": "^3.0.2",
     "ts-node": "^10.9.2",

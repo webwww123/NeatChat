@@ -1,10 +1,15 @@
 import webpack from "webpack";
+import { createRequire } from 'module';
+import withTranspileModules from 'next-transpile-modules';
 
 const mode = process.env.BUILD_MODE ?? "standalone";
 console.log("[Next] build mode", mode);
 
 const disableChunk = !!process.env.DISABLE_CHUNK || mode === "export";
 console.log("[Next] build with chunk: ", !disableChunk);
+
+// 使用 next-transpile-modules 包装配置
+const withTM = withTranspileModules(['pg', 'pg-native', 'pg-pool']);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -20,8 +25,15 @@ const nextConfig = {
       );
     }
 
+    // 提供 Node.js 核心模块的 polyfill
     config.resolve.fallback = {
       child_process: false,
+      fs: false,
+      path: false,
+      stream: false,
+      crypto: false,
+      os: false,
+      util: false
     };
 
     return config;
@@ -42,10 +54,14 @@ const nextConfig = {
       '@hello-pangea/dnd',
       'mermaid',
     ],
+    serverComponentsExternalPackages: ["pg", "pg-native", "pg-pool"],
   },
   compress: true,
   staticPageGenerationTimeout: 180,
   poweredByHeader: false,
+  serverRuntimeConfig: {
+    PROJECT_ROOT: process.cwd(),
+  },
 };
 
 const CorsHeaders = [
@@ -119,4 +135,5 @@ if (mode !== "export") {
   };
 }
 
-export default nextConfig;
+// 导出时使用 withTM 包装 nextConfig
+export default withTM(nextConfig);
