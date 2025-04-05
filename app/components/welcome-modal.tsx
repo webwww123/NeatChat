@@ -87,7 +87,7 @@ export function WelcomeModal() {
             </div>
             
             <div className={styles["feature-item"]}>
-              <span className={styles["feature-text"]}>提供三小时免费试用</span>
+              <span className={styles["feature-text"]}>提供一天免费试用，试用码 test123</span>
             </div>
           </div>
           

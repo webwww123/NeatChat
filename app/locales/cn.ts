@@ -8,9 +8,11 @@ const cn = {
   Error: {
     Unauthorized: isApp
       ? `😆 apple u ！访问秘钥像开发者脑袋一样空空的呢阿达西！请输入访问秘钥或联系客服小哥（其实就是开发者）购买秘钥哦！
-本站pro会员gpt4o不限量，deepseek，gemni全系可用哦~，试用码  test123  仅适用，不会保存聊天记录哦`
+本站pro会员gpt4o不限量，deepseek，gemni全系可用哦~
+试用码  test123  仅适用，不会保存聊天记录哦`
       : `😆 apple u ！访问秘钥像开发者脑袋一样空空的呢阿达西！请输入访问秘钥或联系客服小哥（其实就是开发者）购买秘钥哦！
-本站pro会员gpt4o不限量，deepseek，gemni全系可用哦~，试用码  test123  仅适用，不会保存聊天记录哦
+本站pro会员gpt4o不限量，deepseek，gemni全系可用哦~
+试用码  test123  仅适用，不会保存聊天记录哦
        \\ 1️⃣ 点击[这里](/#/auth)输入访问秘钥 🔑 或 [点击这里购买秘钥](/#/purchase) 🛒
        `,
   },
