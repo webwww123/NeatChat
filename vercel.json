@@ -1,6 +1,15 @@
 {
     "github": {
-        "silent": true
+        "silent": true,
+        "autoAlias": false,
+        "enabled": true,
+        "auto": true
+    },
+    "git": {
+        "deploymentEnabled": {
+            "main": true,
+            "production": false
+        }
     },
     "buildCommand": "next build",
     "devCommand": "next dev",
