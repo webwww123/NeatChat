@@ -1,0 +1,10 @@
+README.md
+.git
+.env
+.env.local
+node_modules
+npm-debug.log
+.DS_Store
+.next
+.vercel
+*.log 

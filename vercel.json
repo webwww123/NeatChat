@@ -5,7 +5,6 @@
     "buildCommand": "next build",
     "devCommand": "next dev",
     "framework": "nextjs",
-    "runtime": "nodejs18.x",
     "outputDirectory": ".next",
     "functions": {
         "api/**/*": {

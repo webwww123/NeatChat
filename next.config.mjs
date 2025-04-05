@@ -33,7 +33,10 @@ const nextConfig = {
       stream: false,
       crypto: false,
       os: false,
-      util: false
+      util: false,
+      net: false,
+      tls: false,
+      'pg-native': false,
     };
 
     return config;
@@ -55,6 +58,9 @@ const nextConfig = {
       'mermaid',
     ],
     serverComponentsExternalPackages: ["pg", "pg-native", "pg-pool"],
+    serverActions: {
+      bodySizeLimit: '4mb',
+    },
   },
   compress: true,
   staticPageGenerationTimeout: 180,
