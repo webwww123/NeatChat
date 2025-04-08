@@ -4,7 +4,6 @@ import { IconButton } from "./button";
 import CloseIcon from "../icons/close.svg";
 import LightningIcon from "../icons/lightning.svg";
 import FireIcon from "../icons/fire.svg";
-import clsx from "clsx";
 import { useWelcomeStore } from "../store/welcome";
 
 export function WelcomeModal() {
@@ -12,7 +11,7 @@ export function WelcomeModal() {
   const [isVisible, setIsVisible] = useState(false);
   const [runningDays, setRunningDays] = useState(213); // 初始值设为213天
   const [userCount, setUserCount] = useState(154); // 初始用户数量设为154
-  
+
   // 计算运行天数，设为固定增长，避免数值过大
   useEffect(() => {
     // 通过当前日期计算增量，但限制最大增长值，确保数字看起来真实
@@ -21,16 +20,16 @@ export function WelcomeModal() {
     const diff = Number(today) - Number(startOfYear);
     const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
     const monthDay = today.getMonth() * 30 + today.getDate();
-    
+
     // 基础值 + 日期增量，但限制增量范围
     setRunningDays(213 + (monthDay % 30)); // 最多增加30天
     setUserCount(154 + (dayOfYear % 20)); // 最多增加20个用户
   }, []);
-  
+
   useEffect(() => {
     // 检查是否应该显示欢迎弹窗
     const shouldShow = welcomeStore.shouldShowWelcome();
-    
+
     if (shouldShow) {
       setIsVisible(true);
       // 更新已显示状态
@@ -39,11 +38,11 @@ export function WelcomeModal() {
       welcomeStore.updateLastVisitDate();
     }
   }, [welcomeStore]);
-  
+
   const handleClose = () => {
     setIsVisible(false);
   };
-  
+
   if (!isVisible) return null;
 
   return (
@@ -60,12 +59,12 @@ export function WelcomeModal() {
             className={styles["welcome-close"]}
           />
         </div>
-        
+
         <div className={styles["welcome-content"]}>
           <div className={styles["welcome-highlight"]}>
             此为GPT-4o、Gemini全系列、DeepSeek稳定镜像站
           </div>
-          
+
           <div className={styles["pro-highlight"]}>
             <div className={styles["highlight-icons"]}>
               <LightningIcon className={styles["highlight-icon-left"]} />
@@ -76,21 +75,28 @@ export function WelcomeModal() {
               <div className={styles["gpt4o-container"]}>
                 <span className={styles["gpt4o-text"]}>GPT-4o</span>
               </div>
+              <div className={styles["gpt4o-container"]}>
+                <span className={styles["gemini-text"]}>Gemini 2.5</span>
+              </div>
               <span className={styles["unlimited-text"]}>不限量使用！</span>
             </div>
             <div className={styles["highlight-background"]}></div>
           </div>
-          
+
           <div className={styles["welcome-features"]}>
             <div className={styles["feature-item"]}>
-              <span className={styles["feature-text"]}>无需魔法，多端通用，可以破限开车</span>
+              <span className={styles["feature-text"]}>
+                无需魔法，多端通用，可以破限开车
+              </span>
             </div>
-            
+
             <div className={styles["feature-item"]}>
-              <span className={styles["feature-text"]}>提供一天免费试用，试用码 test123</span>
+              <span className={styles["feature-text"]}>
+                提供一天免费试用，试用码 test123
+              </span>
             </div>
           </div>
-          
+
           <div className={styles["welcome-stats"]}>
             <div className={styles["stat-item"]}>
               <span className={styles["stat-label"]}>镜像站已稳定运行</span>
@@ -104,7 +110,7 @@ export function WelcomeModal() {
             </div>
           </div>
         </div>
-        
+
         <div className={styles["welcome-footer"]}>
           <IconButton
             type="primary"
@@ -116,4 +122,4 @@ export function WelcomeModal() {
       </div>
     </div>
   );
-} 
+}
