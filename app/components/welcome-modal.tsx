@@ -71,7 +71,6 @@ export function WelcomeModal() {
               <FireIcon className={styles["highlight-icon-right"]} />
             </div>
             <div className={styles["pro-highlight-content"]}>
-              <span className={styles["pro-text"]}>Pro会员</span>
               <div className={styles["gpt4o-container"]}>
                 <span className={styles["gpt4o-text"]}>GPT-4o</span>
               </div>
