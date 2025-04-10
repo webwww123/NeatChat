@@ -19,10 +19,13 @@ const cn = {
   Auth: {
     Return: "返回",
     Title: "需要访问秘钥",
-    Tips: "管理员开启了验证，请在下方填入访问秘钥",
+    Tips: "请在下方填入访问秘钥",
     Input: "在此处填写访问秘钥",
     Confirm: "确认",
     Later: "稍后再说",
+    Expired: "试用已过期，请购买秘钥",
+    Trial: "开启一日试用",
+    Purchase: "点击这里购买秘钥",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} 条对话`,

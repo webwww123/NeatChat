@@ -64,8 +64,15 @@
   }
 
   .auth-logo {
-    margin-top: 10vh;
-    transform: scale(1.4);
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2vh;
+
+    img {
+      animation: logo-spin 1s ease-in-out;
+    }
   }
 
   .auth-title {
@@ -73,10 +80,21 @@
     font-weight: bold;
     line-height: 2;
     margin-bottom: 1vh;
+    text-align: center;
+    color: var(--primary);
   }
 
   .auth-tips {
     font-size: 14px;
+  }
+
+  .auth-input-container {
+    width: 80%;
+    max-width: 350px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .auth-input {
@@ -92,7 +110,8 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    width: 65px;
+    width: 100px;
+    margin-top: 2vh;
 
     button {
       width: 100%;
@@ -103,6 +122,54 @@
 
     button:not(:last-child) {
       margin-bottom: 10px;
+    }
+  }
+
+  .auth-options {
+    margin-top: 4vh;
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .trial-button {
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      opacity: 0.9;
+    }
+    
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .purchase-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      opacity: 0.8;
+      text-decoration: underline;
     }
   }
 }
@@ -117,10 +184,16 @@
   text-align: center;
   transition: all 0.3s ease;
   animation: shake 0.5s ease;
+  max-width: 80%;
 }
 
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
   20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

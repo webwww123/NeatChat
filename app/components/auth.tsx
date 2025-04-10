@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { Path } from "../constant";
 import { useAccessStore } from "../store";
 import Locale from "../locales";
-import NeatIcon from "../icons/neat.svg";
+import hanbaoLogo from "../icons/汉堡.png";
 import { getClientConfig } from "../config/client";
-import { PasswordInput } from "./ui-lib";
+import { Input } from "./ui-lib";
 import LeftIcon from "@/app/icons/left.svg";
 import clsx from "clsx";
 import KeyIcon from "@/app/icons/key.svg";
@@ -181,6 +181,15 @@ export function AuthPage() {
     }
   };
 
+  // 设置一日试用函数
+  const startOneDayTrial = () => {
+    setInputAccessCode("test123");
+    // 自动启动验证过程
+    setTimeout(() => {
+      verifyAndGoChat();
+    }, 100);
+  };
+
   const resetAccessCode = () => {
     setInputAccessCode("");
     accessStore.update((access) => {
@@ -210,25 +219,25 @@ export function AuthPage() {
           onClick={() => navigate(Path.Home)}
         ></IconButton>
       </div>
+
       <div className={clsx("no-dark", styles["auth-logo"])}>
-        <NeatIcon width={30} height={30} />
+        <img src={hanbaoLogo.src} alt="汉堡Logo" width={80} height={80} />
       </div>
 
-      <div className={styles["auth-title"]}>{Locale.Auth.Title}</div>
-      <div className={styles["auth-tips"]}>{Locale.Auth.Tips}</div>
+      <div className={styles["auth-title"]}>需要访问秘钥</div>
 
-      <PasswordInput
-        style={{ marginTop: "3vh", marginBottom: "1vh" }}
-        aria={Locale.Settings.ShowPassword}
-        aria-label={Locale.Auth.Input}
-        value={inputAccessCode}
-        type="text"
-        placeholder={Locale.Auth.Input}
-        onChange={(e) => {
-          setInputAccessCode(e.currentTarget.value);
-          setErrorMessage("");
-        }}
-      />
+      <div className={styles["auth-input-container"]}>
+        <Input
+          style={{ marginTop: "3vh", marginBottom: "1vh", textAlign: "center" }}
+          value={inputAccessCode}
+          type="text"
+          placeholder={Locale.Auth.Input}
+          onChange={(e) => {
+            setInputAccessCode(e.currentTarget.value);
+            setErrorMessage("");
+          }}
+        />
+      </div>
 
       {errorMessage && (
         <div className={styles["auth-error"]}>
@@ -246,29 +255,11 @@ export function AuthPage() {
                 textDecoration: "underline",
               }}
             >
-              点击这里购买
+              {Locale.Auth.Purchase}
             </a>
           )}
         </div>
       )}
-
-      <div style={{ textAlign: "center", margin: "1vh 0 3vh" }}>
-        <a
-          onClick={() => navigate(Path.Purchase)}
-          style={{
-            color: "var(--primary)",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "5px",
-            fontSize: "14px",
-          }}
-        >
-          <KeyIcon style={{ width: "14px", height: "14px" }} />
-          点击这里购买秘钥
-        </a>
-      </div>
 
       <div className={styles["auth-actions"]}>
         <IconButton
@@ -278,6 +269,24 @@ export function AuthPage() {
           disabled={isVerifying || !inputAccessCode.trim()}
           onClick={verifyAndGoChat}
         />
+      </div>
+
+      <div className={styles["auth-options"]}>
+        <div className={styles["trial-button"]} onClick={startOneDayTrial}>
+          👉 {Locale.Auth.Trial} 👈
+        </div>
+
+        <div style={{ marginTop: "20px", textAlign: "center" }}>
+          <a
+            onClick={() => navigate(Path.Purchase)}
+            className={styles["purchase-link"]}
+          >
+            <KeyIcon
+              style={{ width: "14px", height: "14px", marginRight: "5px" }}
+            />
+            {Locale.Auth.Purchase}
+          </a>
+        </div>
       </div>
     </div>
   );
