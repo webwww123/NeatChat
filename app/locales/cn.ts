@@ -290,6 +290,16 @@ const cn = {
         Title: "编辑提示词",
       },
     },
+    Account: {
+      Title: "当前账号",
+      SubTitle: "管理您的账号信息",
+      Login: "登录",
+      Logout: "登出",
+      LogoutSuccess: "成功登出",
+      Buy: "购买",
+      NotLoggedIn: "未登录",
+      LoggedInAs: "当前账号:",
+    },
     HistoryCount: {
       Title: "附带历史消息数",
       SubTitle: "每次请求携带的历史消息数",

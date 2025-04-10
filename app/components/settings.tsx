@@ -14,6 +14,7 @@ import DownloadIcon from "../icons/download.svg";
 import UploadIcon from "../icons/upload.svg";
 import ConfigIcon from "../icons/config.svg";
 import ConfirmIcon from "../icons/confirm.svg";
+import KeyIcon from "../icons/key.svg";
 
 import ConnectionIcon from "../icons/connection.svg";
 import CloudSuccessIcon from "../icons/cloud-success.svg";
@@ -1469,7 +1470,50 @@ export function Settings() {
               />
             )}
           </ListItem>
+        </List>
 
+        <List>
+          <ListItem
+            title={Locale.Settings.Account.Title}
+            subTitle={Locale.Settings.Account.SubTitle}
+          >
+            <div className={styles["account-actions"]}>
+              {accessStore.accessCode ? (
+                <>
+                  <span className={styles["account-code"]}>
+                    {accessStore.accessCode}
+                  </span>
+                  <IconButton
+                    icon={<ClearIcon />}
+                    text={Locale.Settings.Account.Logout}
+                    onClick={() => {
+                      accessStore.update((access) => {
+                        access.accessCode = "";
+                      });
+                      showToast(Locale.Settings.Account.LogoutSuccess);
+                    }}
+                    bordered
+                  />
+                </>
+              ) : (
+                <IconButton
+                  icon={<KeyIcon />}
+                  text={Locale.Settings.Account.Login}
+                  onClick={() => navigate(Path.Auth)}
+                  bordered
+                />
+              )}
+              <IconButton
+                icon={<KeyIcon />}
+                text={Locale.Settings.Account.Buy}
+                onClick={() => navigate(Path.Purchase)}
+                type="primary"
+              />
+            </div>
+          </ListItem>
+        </List>
+
+        <List>
           <ListItem title={Locale.Settings.SendKey}>
             <Select
               aria-label={Locale.Settings.SendKey}

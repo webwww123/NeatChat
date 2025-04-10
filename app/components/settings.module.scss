@@ -126,3 +126,77 @@
     }
   }
 }
+
+// 账号信息样式
+.account-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.account-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 15px;
+  border-radius: 10px;
+  background-color: var(--second);
+  min-height: 40px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.account-logged-in {
+  color: var(--primary);
+  font-weight: 500;
+  width: 100%;
+}
+
+.account-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  
+  span:first-child {
+    font-size: 14px;
+    opacity: 0.7;
+  }
+}
+
+.account-not-logged-in {
+  color: #ff6b00;
+  font-style: italic;
+  padding: 5px 0;
+}
+
+.account-code {
+  padding: 5px 10px;
+  background-color: rgba(var(--primary-rgb), 0.1);
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 16px;
+  letter-spacing: 1px;
+  border: 1px solid rgba(var(--primary-rgb), 0.2);
+  margin-right: 10px;
+}
+
+.account-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  button {
+    min-width: 80px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
