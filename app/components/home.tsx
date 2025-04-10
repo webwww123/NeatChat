@@ -35,6 +35,7 @@ import { InvitePage } from "./invite";
 import { WelcomeModal } from "./welcome-modal";
 import { Chat } from "./chat";
 import { NewChat } from "./new-chat";
+import { PurchaseEntry } from "./purchase-entry";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -147,7 +148,7 @@ const loadAsyncGoogleFont = () => {
   preconnectEl.rel = "preconnect";
   preconnectEl.href = "https://fonts.googleapis.com";
   document.head.appendChild(preconnectEl);
-  
+
   const preconnectEl2 = document.createElement("link");
   preconnectEl2.rel = "preconnect";
   preconnectEl2.href = "https://fonts.gstatic.com";
@@ -208,8 +209,18 @@ function Screen() {
   }
   const renderContent = () => {
     if (isAuth) return <AuthPage />;
-    if (isPurchase) return <WindowContent><PurchasePage /></WindowContent>;
-    if (isInvite) return <WindowContent><InvitePage /></WindowContent>;
+    if (isPurchase)
+      return (
+        <WindowContent>
+          <PurchasePage />
+        </WindowContent>
+      );
+    if (isInvite)
+      return (
+        <WindowContent>
+          <InvitePage />
+        </WindowContent>
+      );
     if (isSd) return <Sd />;
     if (isSdNew) return <Sd />;
     return (
@@ -296,6 +307,7 @@ export function Home() {
       <Router>
         <Screen />
         <WelcomeModal />
+        <PurchaseEntry />
       </Router>
     </ErrorBoundary>
   );
