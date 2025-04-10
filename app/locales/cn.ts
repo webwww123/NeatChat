@@ -22,6 +22,7 @@ const cn = {
     Tips: "请在下方填入访问秘钥",
     Input: "在此处填写访问秘钥",
     Confirm: "确认",
+    Confirming: "验证中...",
     Later: "稍后再说",
     Expired: "试用已过期，请购买秘钥",
     Trial: "开启一日试用",

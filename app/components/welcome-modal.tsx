@@ -5,6 +5,7 @@ import CloseIcon from "../icons/close.svg";
 import LightningIcon from "../icons/lightning.svg";
 import FireIcon from "../icons/fire.svg";
 import { useWelcomeStore } from "../store/welcome";
+import Image from "next/image";
 
 export function WelcomeModal() {
   const welcomeStore = useWelcomeStore();
@@ -50,7 +51,12 @@ export function WelcomeModal() {
       <div className={styles["welcome-container"]}>
         <div className={styles["welcome-header"]}>
           <div className={styles["welcome-logo"]}>
-            <img src="/汉堡.png" width={40} height={40} alt="HanBaoChat Logo" />
+            <Image
+              src="/汉堡.png"
+              width={40}
+              height={40}
+              alt="HanBaoChat Logo"
+            />
             <div className={styles["welcome-title"]}>欢迎使用 HanBaoChat</div>
           </div>
           <IconButton

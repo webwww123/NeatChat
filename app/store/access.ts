@@ -191,12 +191,18 @@ export const useAccessStore = createPersistStore(
     },
 
     enabledAccessControl() {
-      get().fetch();
+      const access = get() as any;
+      if (typeof access.fetch === "function") {
+        access.fetch();
+      }
       return get().needCode;
     },
 
     edgeVoiceName() {
-      get().fetch();
+      const access = get() as any;
+      if (typeof access.fetch === "function") {
+        access.fetch();
+      }
       return get().edgeTTSVoiceName;
     },
 
@@ -248,30 +254,50 @@ export const useAccessStore = createPersistStore(
     },
 
     isAuthorized() {
-      get().fetch();
+      const access = get() as any;
+      if (typeof access.fetch === "function") {
+        access.fetch();
+      }
 
       // 检查是否过期
-      const isExpired = get().checkAccessExpiry();
+      const isExpired =
+        typeof access.checkAccessExpiry === "function"
+          ? access.checkAccessExpiry()
+          : false;
       if (isExpired) {
         return false;
       }
 
       // has token or has code or disabled access control
       return (
-        get().isValidOpenAI() ||
-        get().isValidAzure() ||
-        get().isValidGoogle() ||
-        get().isValidAnthropic() ||
-        get().isValidBaidu() ||
-        get().isValidByteDance() ||
-        get().isValidAlibaba() ||
-        get().isValidTencent() ||
-        get().isValidMoonshot() ||
-        get().isValidIflytek() ||
-        get().isValidXAI() ||
-        get().isValidChatGLM() ||
-        !get().enabledAccessControl() ||
-        (get().enabledAccessControl() && ensure(get(), ["accessCode"]))
+        (typeof access.isValidOpenAI === "function" &&
+          access.isValidOpenAI()) ||
+        (typeof access.isValidAzure === "function" && access.isValidAzure()) ||
+        (typeof access.isValidGoogle === "function" &&
+          access.isValidGoogle()) ||
+        (typeof access.isValidAnthropic === "function" &&
+          access.isValidAnthropic()) ||
+        (typeof access.isValidBaidu === "function" && access.isValidBaidu()) ||
+        (typeof access.isValidByteDance === "function" &&
+          access.isValidByteDance()) ||
+        (typeof access.isValidAlibaba === "function" &&
+          access.isValidAlibaba()) ||
+        (typeof access.isValidTencent === "function" &&
+          access.isValidTencent()) ||
+        (typeof access.isValidMoonshot === "function" &&
+          access.isValidMoonshot()) ||
+        (typeof access.isValidIflytek === "function" &&
+          access.isValidIflytek()) ||
+        (typeof access.isValidXAI === "function" && access.isValidXAI()) ||
+        (typeof access.isValidChatGLM === "function" &&
+          access.isValidChatGLM()) ||
+        !(
+          typeof access.enabledAccessControl === "function" &&
+          access.enabledAccessControl()
+        ) ||
+        (typeof access.enabledAccessControl === "function" &&
+          access.enabledAccessControl() &&
+          ensure(get(), ["accessCode"]))
       );
     },
     fetch() {
@@ -366,7 +392,11 @@ export const useAccessStore = createPersistStore(
 
       // 定期检查是否过期
       const checkInterval = setInterval(() => {
-        const isExpired = get().checkAccessExpiry();
+        const access = get() as any;
+        const isExpired =
+          typeof access.checkAccessExpiry === "function"
+            ? access.checkAccessExpiry()
+            : false;
         if (isExpired) {
           console.log("[定时检查] 临时访问已过期");
         }

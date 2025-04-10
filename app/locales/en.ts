@@ -20,6 +20,7 @@ const en: LocaleType = {
     Confirm: "Confirm",
     Confirming: "Confirming...",
     Return: "Return",
+    Later: "Later",
     Expired: "Trial expired, please purchase a key",
     Trial: "Start One Day Trial",
     Purchase: "Click here to purchase key",
@@ -161,6 +162,16 @@ const en: LocaleType = {
     Title: "Settings",
     SubTitle: "All Settings",
     ShowPassword: "ShowPassword",
+    Account: {
+      Title: "Account",
+      SubTitle: "Manage your account information",
+      Login: "Login",
+      Logout: "Logout",
+      LogoutSuccess: "Logged out successfully",
+      Buy: "Buy",
+      NotLoggedIn: "Not Logged In",
+      LoggedInAs: "Logged in as:",
+    },
     Danger: {
       Reset: {
         Title: "Reset All Settings",

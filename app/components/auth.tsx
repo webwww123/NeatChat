@@ -66,7 +66,12 @@ export function AuthPage() {
 
     try {
       // 临时访问码逻辑处理
-      let data;
+      let data: {
+        success: boolean;
+        isTemporary?: boolean;
+        expiryTime?: number;
+        message?: string;
+      };
 
       // 检查是否是已知的、已过期的临时访问码
       if (
@@ -108,7 +113,12 @@ export function AuthPage() {
         data = await response.json();
 
         // 如果是临时访问码且验证成功，全局保存过期时间
-        if (data.success && data.isTemporary && isTemporaryCode) {
+        if (
+          data.success &&
+          data.isTemporary &&
+          isTemporaryCode &&
+          data.expiryTime !== undefined
+        ) {
           console.log(
             "保存新的全局过期时间:",
             new Date(data.expiryTime).toLocaleString(),
@@ -139,7 +149,7 @@ export function AuthPage() {
         });
 
         // 临时访问码显示剩余时间
-        if (data.isTemporary) {
+        if (data.isTemporary && data.expiryTime !== undefined) {
           const remainingSecs = Math.max(
             0,
             Math.floor((data.expiryTime - Date.now()) / 1000),
@@ -206,7 +216,12 @@ export function AuthPage() {
 
     try {
       // 临时访问码逻辑处理
-      let data;
+      let data: {
+        success: boolean;
+        isTemporary?: boolean;
+        expiryTime?: number;
+        message?: string;
+      };
 
       // 检查是否是已知的、已过期的临时访问码
       if (
@@ -248,7 +263,12 @@ export function AuthPage() {
         data = await response.json();
 
         // 如果是临时访问码且验证成功，全局保存过期时间
-        if (data.success && data.isTemporary && isTemporaryCode) {
+        if (
+          data.success &&
+          data.isTemporary &&
+          isTemporaryCode &&
+          data.expiryTime !== undefined
+        ) {
           console.log(
             "保存新的全局过期时间:",
             new Date(data.expiryTime).toLocaleString(),
@@ -279,7 +299,7 @@ export function AuthPage() {
         });
 
         // 临时访问码显示剩余时间
-        if (data.isTemporary) {
+        if (data.isTemporary && data.expiryTime !== undefined) {
           const remainingSecs = Math.max(
             0,
             Math.floor((data.expiryTime - Date.now()) / 1000),
