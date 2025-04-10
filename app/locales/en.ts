@@ -14,12 +14,13 @@ const en: LocaleType = {
      `,
   },
   Auth: {
-    Return: "Return",
-    Title: "Need Access Code",
-    Tips: "Please enter access code below",
-    Input: "access code",
+    Title: "Access Control",
+    Tips: "Enter access code below to start",
+    Input: "Enter access code",
     Confirm: "Confirm",
-    Later: "Later",
+    Confirming: "Confirming...",
+    Return: "Return",
+    Expired: "Trial expired, please purchase a key",
   },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} messages`,

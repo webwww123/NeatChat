@@ -68,7 +68,19 @@ export function AuthPage() {
       // 临时访问码逻辑处理
       let data;
 
-      // 如果是临时访问码且有有效的过期时间，直接使用
+      // 检查是否是已知的、已过期的临时访问码
+      if (
+        isTemporaryCode &&
+        existingExpiryTime > 0 &&
+        existingExpiryTime <= now
+      ) {
+        console.log("检测到已过期的临时访问码:", inputAccessCode);
+        setErrorMessage(Locale.Auth.Expired); // 使用新的提示语
+        setIsVerifying(false); // 停止验证动画
+        return; // 阻止进一步操作
+      }
+
+      // 如果是临时访问码且有有效的全局过期时间，直接使用
       if (isTemporaryCode && hasValidExpiry) {
         console.log(
           "使用已存储的全局过期时间:",
@@ -81,6 +93,7 @@ export function AuthPage() {
         };
       } else {
         // 需要发送验证请求
+        console.log("需要发送验证请求或验证非临时码");
         const response = await fetch("/api/verify-access", {
           method: "POST",
           headers: {
@@ -218,7 +231,25 @@ export function AuthPage() {
       />
 
       {errorMessage && (
-        <div className={styles["auth-error"]}>{errorMessage}</div>
+        <div className={styles["auth-error"]}>
+          {errorMessage}
+          {/* 如果错误消息是试用过期，则显示购买链接 */}
+          {errorMessage === Locale.Auth.Expired && (
+            <a
+              onClick={() => navigate(Path.Purchase)}
+              style={{
+                color: "var(--primary)",
+                cursor: "pointer",
+                display: "block", // 换行显示
+                marginTop: "10px", // 增加间距
+                fontSize: "14px",
+                textDecoration: "underline",
+              }}
+            >
+              点击这里购买
+            </a>
+          )}
+        </div>
       )}
 
       <div style={{ textAlign: "center", margin: "1vh 0 3vh" }}>
