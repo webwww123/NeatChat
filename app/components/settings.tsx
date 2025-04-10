@@ -599,6 +599,54 @@ function useServerCustomModels() {
   return serverCustomModels;
 }
 
+// 在合适的位置添加倒计时组件
+function TemporaryAccessCountdown() {
+  const accessStore = useAccessStore();
+  const [remainingTime, setRemainingTime] = useState(0);
+
+  useEffect(() => {
+    // 首次加载时获取剩余时间
+    setRemainingTime(accessStore.getRemainingTime());
+
+    // 每秒更新一次剩余时间
+    const timer = setInterval(() => {
+      const newTime = accessStore.getRemainingTime();
+      setRemainingTime(newTime);
+
+      // 如果剩余时间为0，停止计时器
+      if (newTime <= 0) {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [accessStore]);
+
+  if (!accessStore.isTemporaryAccess || remainingTime <= 0) {
+    return null;
+  }
+
+  // 格式化为分:秒
+  const minutes = Math.floor(remainingTime / 60);
+  const seconds = remainingTime % 60;
+  const formattedTime = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+
+  // 当剩余时间小于30秒时添加警告样式
+  const isWarning = remainingTime < 30;
+  const isUrgent = remainingTime < 10;
+
+  return (
+    <div
+      className={`${styles["access-countdown"]} 
+                 ${isWarning ? styles["access-countdown-warning"] : ""} 
+                 ${isUrgent ? styles["access-countdown-urgent"] : ""}`}
+    >
+      {isUrgent ? "⚠️⚠️ " : isWarning ? "⚠️ " : ""}
+      临时访问码，剩余时间: {formattedTime}
+    </div>
+  );
+}
+
 export function Settings() {
   const navigate = useNavigate();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -1480,16 +1528,43 @@ export function Settings() {
             <div className={styles["account-actions"]}>
               {accessStore.accessCode ? (
                 <>
-                  <span className={styles["account-code"]}>
-                    {accessStore.accessCode}
-                  </span>
+                  <div className={styles["account-code-container"]}>
+                    <span className={styles["account-code"]}>
+                      {accessStore.accessCode}
+                    </span>
+                    {accessStore.isTemporaryAccess && (
+                      <TemporaryAccessCountdown />
+                    )}
+                  </div>
                   <IconButton
                     icon={<ClearIcon />}
                     text={Locale.Settings.Account.Logout}
                     onClick={() => {
+                      // 获取当前的访问码，判断是否是临时访问码
+                      const currentAccessCode = accessStore.accessCode;
+                      const isTemporaryCode = ["test123", "test1234"].includes(
+                        currentAccessCode,
+                      );
+
+                      // 清除当前会话的访问状态
                       accessStore.update((access) => {
                         access.accessCode = "";
+                        access.isTemporaryAccess = false;
+                        access.accessExpiryTime = undefined;
                       });
+                      localStorage.removeItem("accessExpiryTime");
+
+                      // 不要清除全局临时访问码记录
+                      // 修改为只清除非临时访问码
+                      if (!isTemporaryCode) {
+                        ["test123", "test1234"].forEach((code) => {
+                          localStorage.removeItem(`global_temp_access_${code}`);
+                        });
+                      }
+
+                      console.log(
+                        "登出成功，临时访问码过期时间保留供其他用户使用",
+                      );
                       showToast(Locale.Settings.Account.LogoutSuccess);
                     }}
                     bordered

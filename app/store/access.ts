@@ -22,6 +22,7 @@ import { createPersistStore } from "../utils/store";
 import { ensure } from "../utils/clone";
 import { DEFAULT_CONFIG } from "./config";
 import { getModelProvider } from "../utils/model";
+import { showToast } from "../components/ui-lib";
 
 let fetchState = 0; // 0 not fetch, 1 fetching, 2 done
 
@@ -56,6 +57,10 @@ const DEFAULT_ACCESS_STATE = {
   useCustomConfig: false,
 
   provider: ServiceProvider.OpenAI,
+
+  // 临时访问码相关
+  isTemporaryAccess: false,
+  accessExpiryTime: undefined as number | undefined,
 
   // openai
   openaiUrl: DEFAULT_OPENAI_URL,
@@ -129,19 +134,69 @@ const DEFAULT_ACCESS_STATE = {
   edgeTTSVoiceName: "zh-CN-YunxiNeural",
 };
 
+// 过期检查的时间间隔（毫秒）
+const EXPIRY_CHECK_INTERVAL = 10 * 1000; // 10秒检查一次
+
 export const useAccessStore = createPersistStore(
   { ...DEFAULT_ACCESS_STATE },
 
   (set, get) => ({
-    enabledAccessControl() {
-      this.fetch();
+    // 检查访问是否过期
+    checkAccessExpiry() {
+      const state = get();
+      // 只有临时访问码需要检查过期
+      if (state.isTemporaryAccess && state.accessExpiryTime) {
+        const now = Date.now();
+        if (now >= state.accessExpiryTime) {
+          // 过期了，清除访问码
+          console.log("[临时访问] 检测到已过期，清除访问码");
 
+          // 记录当前的访问码，判断是否是临时访问码
+          const currentAccessCode = state.accessCode;
+          const isTemporaryCode = ["test123", "test1234"].includes(
+            currentAccessCode,
+          );
+
+          set((access) => {
+            access.accessCode = "";
+            access.isTemporaryAccess = false;
+            access.accessExpiryTime = undefined;
+            return access;
+          });
+
+          localStorage.removeItem("accessExpiryTime");
+
+          // 不清除全局临时访问码记录，让其他用户仍可使用
+          // 以下代码被注释掉
+          // ["test123", "test1234"].forEach(code => {
+          //   localStorage.removeItem(`temp_access_${code}`);
+          // });
+
+          showToast("临时访问码已过期，请重新登录");
+          return true;
+        }
+      }
+      return false;
+    },
+
+    // 获取剩余时间（秒）
+    getRemainingTime() {
+      const state = get();
+      if (state.isTemporaryAccess && state.accessExpiryTime) {
+        const now = Date.now();
+        const remainingMs = Math.max(0, state.accessExpiryTime - now);
+        return Math.floor(remainingMs / 1000);
+      }
+      return 0;
+    },
+
+    enabledAccessControl() {
+      get().fetch();
       return get().needCode;
     },
 
     edgeVoiceName() {
-      this.fetch();
-
+      get().fetch();
       return get().edgeTTSVoiceName;
     },
 
@@ -193,24 +248,30 @@ export const useAccessStore = createPersistStore(
     },
 
     isAuthorized() {
-      this.fetch();
+      get().fetch();
+
+      // 检查是否过期
+      const isExpired = get().checkAccessExpiry();
+      if (isExpired) {
+        return false;
+      }
 
       // has token or has code or disabled access control
       return (
-        this.isValidOpenAI() ||
-        this.isValidAzure() ||
-        this.isValidGoogle() ||
-        this.isValidAnthropic() ||
-        this.isValidBaidu() ||
-        this.isValidByteDance() ||
-        this.isValidAlibaba() ||
-        this.isValidTencent() ||
-        this.isValidMoonshot() ||
-        this.isValidIflytek() ||
-        this.isValidXAI() ||
-        this.isValidChatGLM() ||
-        !this.enabledAccessControl() ||
-        (this.enabledAccessControl() && ensure(get(), ["accessCode"]))
+        get().isValidOpenAI() ||
+        get().isValidAzure() ||
+        get().isValidGoogle() ||
+        get().isValidAnthropic() ||
+        get().isValidBaidu() ||
+        get().isValidByteDance() ||
+        get().isValidAlibaba() ||
+        get().isValidTencent() ||
+        get().isValidMoonshot() ||
+        get().isValidIflytek() ||
+        get().isValidXAI() ||
+        get().isValidChatGLM() ||
+        !get().enabledAccessControl() ||
+        (get().enabledAccessControl() && ensure(get(), ["accessCode"]))
       );
     },
     fetch() {
@@ -245,10 +306,79 @@ export const useAccessStore = createPersistStore(
           fetchState = 2;
         });
     },
+
+    // 设置自动检查过期
+    setupExpiryCheck() {
+      // 从localStorage恢复过期时间
+      const storedExpiryTime = localStorage.getItem("accessExpiryTime");
+
+      if (storedExpiryTime) {
+        const expiryTime = parseInt(storedExpiryTime);
+
+        if (!isNaN(expiryTime)) {
+          const now = Date.now();
+          if (expiryTime > now) {
+            // 还未过期，恢复临时访问状态
+            const accessCode = get().accessCode;
+            console.log(
+              `[恢复临时访问] 访问码: ${
+                accessCode ? accessCode.substring(0, 2) + "***" : "未设置"
+              }, 过期时间: ${new Date(expiryTime).toLocaleString()}`,
+            );
+
+            set((access) => {
+              access.isTemporaryAccess = true;
+              access.accessExpiryTime = expiryTime;
+              return access;
+            });
+          } else {
+            // 已过期，清除状态
+            console.log("[临时访问] 已过期，清除状态");
+
+            // 记录当前的访问码，判断是否是临时访问码
+            const currentAccessCode = get().accessCode;
+            const isTemporaryCode = ["test123", "test1234"].includes(
+              currentAccessCode,
+            );
+
+            set((access) => {
+              access.accessCode = "";
+              access.isTemporaryAccess = false;
+              access.accessExpiryTime = undefined;
+              return access;
+            });
+
+            localStorage.removeItem("accessExpiryTime");
+
+            // 不清除全局临时访问码记录
+            // 以下代码被注释掉
+            // ["test123", "test1234"].forEach(code => {
+            //   localStorage.removeItem(`temp_access_${code}`);
+            // });
+
+            showToast("临时访问码已过期，请重新登录");
+          }
+        } else {
+          // 无效的过期时间格式，清除
+          localStorage.removeItem("accessExpiryTime");
+        }
+      }
+
+      // 定期检查是否过期
+      const checkInterval = setInterval(() => {
+        const isExpired = get().checkAccessExpiry();
+        if (isExpired) {
+          console.log("[定时检查] 临时访问已过期");
+        }
+      }, EXPIRY_CHECK_INTERVAL);
+
+      // 返回清理函数
+      return () => clearInterval(checkInterval);
+    },
   }),
   {
     name: StoreKey.Access,
-    version: 2,
+    version: 3,
     migrate(persistedState, version) {
       if (version < 2) {
         const state = persistedState as {
@@ -262,6 +392,14 @@ export const useAccessStore = createPersistStore(
       }
 
       return persistedState as any;
+    },
+    onRehydrateStorage: (state) => {
+      return (rehydratedState) => {
+        if (rehydratedState) {
+          // 设置过期检查
+          rehydratedState.setupExpiryCheck();
+        }
+      };
     },
   },
 );
