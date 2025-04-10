@@ -626,19 +626,20 @@ function TemporaryAccessCountdown() {
     return null;
   }
 
-  // 格式化为分:秒
-  const minutes = Math.floor(remainingTime / 60);
-  const seconds = remainingTime % 60;
-  const formattedTime = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  // 格式化为小时:分钟
+  const hours = Math.floor(remainingTime / 3600);
+  const minutes = Math.floor((remainingTime % 3600) / 60);
+  const formattedTime = `${hours}小时${minutes}分钟`;
 
-  // 当剩余时间小于30秒时添加警告样式
-  const isWarning = remainingTime < 30;
-  const isUrgent = remainingTime < 10;
+  // 当剩余时间小于 30 分钟时添加警告样式 (调整阈值)
+  const isWarning = remainingTime < 30 * 60;
+  // 当剩余时间小于 5 分钟时添加紧急样式 (调整阈值)
+  const isUrgent = remainingTime < 5 * 60;
 
   return (
     <div
-      className={`${styles["access-countdown"]} 
-                 ${isWarning ? styles["access-countdown-warning"] : ""} 
+      className={`${styles["access-countdown"]}
+                 ${isWarning ? styles["access-countdown-warning"] : ""}
                  ${isUrgent ? styles["access-countdown-urgent"] : ""}`}
     >
       {isUrgent ? "⚠️⚠️ " : isWarning ? "⚠️ " : ""}

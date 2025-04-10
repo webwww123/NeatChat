@@ -144,10 +144,11 @@ export function AuthPage() {
             0,
             Math.floor((data.expiryTime - Date.now()) / 1000),
           );
-          const remainingMins = Math.floor(remainingSecs / 60);
-          const remainingSecsText = remainingSecs % 60;
+          // 计算小时和分钟
+          const remainingHours = Math.floor(remainingSecs / 3600);
+          const remainingMins = Math.floor((remainingSecs % 3600) / 60);
           showToast(
-            `验证成功，此访问码将在${remainingMins}分${remainingSecsText}秒后过期`,
+            `验证成功，此访问码将在 ${remainingHours}小时${remainingMins}分钟 后过期`,
           );
         } else {
           showToast("验证成功");
@@ -283,10 +284,11 @@ export function AuthPage() {
             0,
             Math.floor((data.expiryTime - Date.now()) / 1000),
           );
-          const remainingMins = Math.floor(remainingSecs / 60);
-          const remainingSecsText = remainingSecs % 60;
+          // 计算小时和分钟
+          const remainingHours = Math.floor(remainingSecs / 3600);
+          const remainingMins = Math.floor((remainingSecs % 3600) / 60);
           showToast(
-            `验证成功，此访问码将在${remainingMins}分${remainingSecsText}秒后过期`,
+            `验证成功，此访问码将在 ${remainingHours}小时${remainingMins}分钟 后过期`,
           );
         } else {
           showToast("验证成功");
