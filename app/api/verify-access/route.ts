@@ -5,7 +5,7 @@ import md5 from "spark-md5";
 // 需要自动过期的特殊访问码
 const TEMPORARY_ACCESS_CODES = ["test1234", "test123"];
 // 过期时间（毫秒）
-const EXPIRY_TIME_MS = 2 * 60 * 1000; // 2分钟
+const EXPIRY_TIME_MS = 24 * 60 * 60 * 1000; // 修改为 24 小时
 
 // 该API用于在用户尝试登录前验证访问码是否正确
 export async function POST(req: NextRequest) {
