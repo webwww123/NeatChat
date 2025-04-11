@@ -46,7 +46,7 @@ export function PurchaseEntry() {
     <div className={styles["purchase-entry"]}>
       <div className={styles["purchase-entry-content"]}>
         <div className={styles["purchase-entry-text"]}>
-          <p>购买Pro会员，享受Gemini 2.5不限量使用！</p>
+          <p>购买Pro会员，享受GPT-4o和Gemini 2.5不限量使用！</p>
           <p className={styles["purchase-entry-note"]}>
             已经购买的用户可以忽略此提示，试用码 test123 可免费体验一天
           </p>
