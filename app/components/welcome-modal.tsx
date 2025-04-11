@@ -91,7 +91,7 @@ export function WelcomeModal() {
           <div className={styles["welcome-features"]}>
             <div className={styles["feature-item"]}>
               <span className={styles["feature-text"]}>
-                无需魔法，多端通用，可以破限开车
+                无需魔法，多端通用，openai升级中~暂不可使用
               </span>
             </div>
 
