@@ -319,8 +319,86 @@ function CheckButton() {
   );
 }
 
+// 添加WebDAV教程弹窗组件
+function WebDAVTutorialModal(props: { onClose?: () => void }) {
+  return (
+    <div className="modal-mask">
+      <Modal
+        title="坚果云WebDAV配置教程"
+        onClose={() => props.onClose?.()}
+        actions={[
+          <IconButton
+            key="confirm"
+            onClick={props.onClose}
+            icon={<ConfirmIcon />}
+            bordered
+            text={Locale.UI.Confirm}
+          />,
+        ]}
+      >
+        <div className={styles["webdav-tutorial-modal"]}>
+          <h3>如何配置坚果云WebDAV</h3>
+          <ol>
+            <li>
+              <strong>注册坚果云账号</strong>
+              <p>
+                访问{" "}
+                <a
+                  href="https://www.jianguoyun.com/s/campaign/cpclanding"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  坚果云官网
+                </a>{" "}
+                并注册账号。
+              </p>
+            </li>
+            <li>
+              <strong>获取WebDAV账号</strong>
+              <p>
+                登录坚果云后，点击右上角的用户名 → 账号信息 →
+                安全选项，找到&quot;第三方应用管理&quot;。
+              </p>
+            </li>
+            <li>
+              <strong>创建应用密码</strong>
+              <p>
+                点击&quot;添加应用&quot;按钮，输入应用名称（如&quot;NeatChat&quot;），然后点击&quot;生成密码&quot;。
+              </p>
+              <p>系统会为你生成一个应用专用密码，请记下生成的用户名和密码。</p>
+            </li>
+            <li>
+              <strong>在NeatChat中配置</strong>
+              <p>填写以下信息：</p>
+              <ul>
+                <li>
+                  <strong>端点</strong>：https://dav.jianguoyun.com/dav/
+                </li>
+                <li>
+                  <strong>用户名</strong>：你的坚果云账号邮箱
+                </li>
+                <li>
+                  <strong>密码</strong>：刚才生成的应用专用密码
+                </li>
+              </ul>
+              <p>填写完成后点击&quot;检查&quot;按钮测试连接。</p>
+            </li>
+          </ol>
+          <div className={styles["webdav-tutorial-note"]}>
+            <p>
+              <strong>注意</strong>
+              ：坚果云免费版每月有流量限制，请注意使用频率。
+            </p>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
+}
+
 function SyncConfigModal(props: { onClose?: () => void }) {
   const syncStore = useSyncStore();
+  const [showWebDAVTutorial, setShowWebDAVTutorial] = useState(false);
 
   return (
     <div className="modal-mask">
@@ -394,6 +472,15 @@ function SyncConfigModal(props: { onClose?: () => void }) {
 
         {syncStore.provider === ProviderType.WebDAV && (
           <>
+            <div className={styles["webdav-title-container"]}>
+              <h3 className={styles["webdav-section-title"]}>WebDAV 配置</h3>
+              <button
+                className={styles["webdav-tutorial-button"]}
+                onClick={() => setShowWebDAVTutorial(true)}
+              >
+                教程
+              </button>
+            </div>
             <List>
               <ListItem title={Locale.Settings.Sync.Config.WebDav.Endpoint}>
                 <input
@@ -432,6 +519,11 @@ function SyncConfigModal(props: { onClose?: () => void }) {
                 ></PasswordInput>
               </ListItem>
             </List>
+            {showWebDAVTutorial && (
+              <WebDAVTutorialModal
+                onClose={() => setShowWebDAVTutorial(false)}
+              />
+            )}
           </>
         )}
 
