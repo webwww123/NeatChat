@@ -187,6 +187,10 @@
   position: relative;
   padding: 2px 15px;
   margin: 0;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
   
   &::before, &::after {
     content: "";
