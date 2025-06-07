@@ -134,6 +134,8 @@ This project does not seek sponsorship. However, if possible, you can support me
 
 [NodeSupport](https://github.com/NodeSeekDev/NodeSupport) sponsors this project
 
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
+
 <a>
 
  <picture>
