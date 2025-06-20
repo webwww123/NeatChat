@@ -135,7 +135,7 @@
 
 [NodeSupport](https://github.com/NodeSeekDev/NodeSupport)赞助了本项目
 
-[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
+
 
 <a>
 
