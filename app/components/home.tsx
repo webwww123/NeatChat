@@ -285,7 +285,7 @@ export function useLoadData() {
           // 更新缓存
           localStorage.setItem(CUSTOM_MODELS_CACHE_KEY, serverCustomModels);
           // 清除旧的模型缓存
-          localStorage.removeItem("models-storage");
+          localStorage.removeItem("chat-next-web-models");
         }
         
         // 加载模型
