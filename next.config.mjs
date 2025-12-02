@@ -65,12 +65,23 @@ const CorsHeaders = [
   },
 ];
 
+// 禁止缓存的头
+const NoCacheHeaders = [
+  { key: "Cache-Control", value: "no-store, no-cache, must-revalidate, proxy-revalidate" },
+  { key: "Pragma", value: "no-cache" },
+  { key: "Expires", value: "0" },
+];
+
 if (mode !== "export") {
   nextConfig.headers = async () => {
     return [
       {
         source: "/api/:path*",
-        headers: CorsHeaders,
+        headers: [...CorsHeaders, ...NoCacheHeaders],
+      },
+      {
+        source: "/api/config",
+        headers: NoCacheHeaders,
       },
     ];
   };

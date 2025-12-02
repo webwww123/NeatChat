@@ -272,13 +272,17 @@ export function useLoadData() {
     (async () => {
       try {
         // 获取服务端配置
-        const configResponse = await fetch("/api/config");
+        const configResponse = await fetch("/api/config", {
+          cache: "no-store",
+          headers: { "Cache-Control": "no-cache" },
+        });
         const serverConfig = await configResponse.json();
         const serverCustomModels = serverConfig.customModels || "";
-        
+
         // 获取本地缓存的 customModels
-        const cachedCustomModels = localStorage.getItem(CUSTOM_MODELS_CACHE_KEY) || "";
-        
+        const cachedCustomModels =
+          localStorage.getItem(CUSTOM_MODELS_CACHE_KEY) || "";
+
         // 如果服务端配置变化了，强制更新模型列表
         if (serverCustomModels !== cachedCustomModels) {
           console.log("[Models] 检测到模型配置变化，正在更新...");
@@ -286,8 +290,11 @@ export function useLoadData() {
           localStorage.setItem(CUSTOM_MODELS_CACHE_KEY, serverCustomModels);
           // 清除旧的模型缓存
           localStorage.removeItem("chat-next-web-models");
+          // 刷新页面以确保模型列表更新
+          window.location.reload();
+          return;
         }
-        
+
         // 加载模型
         const models = await api.llm.models();
         config.mergeModels(models);
