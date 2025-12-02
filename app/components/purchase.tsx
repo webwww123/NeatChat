@@ -85,9 +85,9 @@ export function PurchasePage() {
           <div className={styles["plan-price"]}>¥55</div>
           <div className={styles["plan-features"]}>
             <ul>
-              <li className={styles["feature-highlight"]}>🔥 GPT-4o 不限量使用 🔥</li>
-              <li>DeepSeek 全系列模型</li>
-              <li>Gemini 全系列模型</li>
+              <li className={styles["feature-highlight"]}>🔥 Claude 4.5 不限量使用 🔥</li>
+              <li>Gemini 3 全系列模型</li>
+              <li>全系列模型</li>
               <li>共计160余模型</li>
               <li>上传附件，图片</li>
               <li>语音输入</li>
@@ -114,9 +114,9 @@ export function PurchasePage() {
           <div className={styles["plan-price"]}>¥140</div>
           <div className={styles["plan-features"]}>
             <ul>
-              <li className={styles["feature-highlight"]}>🔥 GPT-4o 不限量使用 🔥</li>
-              <li>DeepSeek 全系列模型</li>
-              <li>Gemini 全系列模型</li>
+              <li className={styles["feature-highlight"]}>🔥 Claude 4.5 不限量使用 🔥</li>
+              <li>Gemini 3 全系列模型</li>
+              <li>全系列模型</li>
               <li>共计160余模型</li>
               <li>上传附件，图片</li>
               <li>语音输入</li>
