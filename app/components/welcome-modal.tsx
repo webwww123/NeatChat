@@ -95,11 +95,7 @@ export function WelcomeModal() {
               </span>
             </div>
 
-            <div className={styles["feature-item"]}>
-              <span className={styles["feature-text"]}>
-                提供一天免费试用，试用码 test123
-              </span>
-            </div>
+
           </div>
 
           <div className={styles["welcome-stats"]}>
