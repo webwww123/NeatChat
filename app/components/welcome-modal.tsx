@@ -68,7 +68,7 @@ export function WelcomeModal() {
 
         <div className={styles["welcome-content"]}>
           <div className={styles["welcome-highlight"]}>
-            此为GPT-4o、Gemini全系列、DeepSeek稳定镜像站
+            此为Claude 4.5、Gemini 3全系列稳定镜像站
           </div>
 
           <div className={styles["pro-highlight"]}>
@@ -78,10 +78,10 @@ export function WelcomeModal() {
             </div>
             <div className={styles["pro-highlight-content"]}>
               <div className={styles["gpt4o-container"]}>
-                <span className={styles["gpt4o-text"]}>GPT-4o</span>
+                <span className={styles["gpt4o-text"]}>Claude 4.5</span>
               </div>
               <div className={styles["gpt4o-container"]}>
-                <span className={styles["gemini-text"]}>Gemini 2.5</span>
+                <span className={styles["gemini-text"]}>Gemini 3</span>
               </div>
               <span className={styles["unlimited-text"]}>不限量使用！</span>
             </div>
