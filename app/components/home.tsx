@@ -260,6 +260,9 @@ function Screen() {
   );
 }
 
+// 用于存储上次的 customModels 配置
+const CUSTOM_MODELS_CACHE_KEY = "custom-models-hash";
+
 export function useLoadData() {
   const config = useAppConfig();
 
@@ -267,8 +270,30 @@ export function useLoadData() {
 
   useEffect(() => {
     (async () => {
-      const models = await api.llm.models();
-      config.mergeModels(models);
+      try {
+        // 获取服务端配置
+        const configResponse = await fetch("/api/config");
+        const serverConfig = await configResponse.json();
+        const serverCustomModels = serverConfig.customModels || "";
+        
+        // 获取本地缓存的 customModels
+        const cachedCustomModels = localStorage.getItem(CUSTOM_MODELS_CACHE_KEY) || "";
+        
+        // 如果服务端配置变化了，强制更新模型列表
+        if (serverCustomModels !== cachedCustomModels) {
+          console.log("[Models] 检测到模型配置变化，正在更新...");
+          // 更新缓存
+          localStorage.setItem(CUSTOM_MODELS_CACHE_KEY, serverCustomModels);
+          // 清除旧的模型缓存
+          localStorage.removeItem("models-storage");
+        }
+        
+        // 加载模型
+        const models = await api.llm.models();
+        config.mergeModels(models);
+      } catch (e) {
+        console.error("[Models] 加载模型失败:", e);
+      }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
