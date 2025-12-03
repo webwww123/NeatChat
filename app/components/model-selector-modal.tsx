@@ -178,29 +178,6 @@ export function ModelSelectorModal(props: {
     setLoading(true);
 
     try {
-      // 尝试从本地存储加载模型列表
-      const storedModels = localStorage.getItem(MODELS_STORAGE_KEY);
-
-      if (storedModels && !forceRefresh) {
-        // 如果有本地存储的模型列表且不是强制刷新，则使用本地存储的数据
-        const parsedModels = JSON.parse(storedModels);
-
-        // 确保保留测试结果相关字段
-        const modelsWithTestResults = parsedModels.map((model: ModelInfo) => ({
-          ...model,
-          selected: currentModelList.includes(model.id),
-          // 保留测试相关字段
-          tested: model.tested || false,
-          available: model.available,
-          responseTime: model.responseTime,
-          timeout: model.timeout,
-        }));
-
-        setModels(modelsWithTestResults);
-        setLoading(false);
-        return;
-      }
-
       // 检查用户是否已输入访问密码
       if (!accessStore.isAuthorized()) {
         showToast(Locale.Settings.Access.CustomModel.AuthRequired);
@@ -211,8 +188,11 @@ export function ModelSelectorModal(props: {
       // 获取自定义模型列表
       const customModelIds = currentModelList.filter((id) => id !== "-all");
 
-      // 从远程获取
-      const configResponse = await fetch("/api/config");
+      // 每次都从服务端获取最新配置，不使用本地缓存
+      const configResponse = await fetch("/api/config", {
+        cache: "no-store",
+        headers: { "Cache-Control": "no-cache" },
+      });
       const configData = await configResponse.json();
 
       // 检查是否启用了自定义接口
