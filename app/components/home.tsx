@@ -283,6 +283,9 @@ export function useLoadData() {
         const cachedCustomModels =
           localStorage.getItem(CUSTOM_MODELS_CACHE_KEY) || "";
 
+        console.log("[Models] 服务端配置:", serverCustomModels.substring(0, 100));
+        console.log("[Models] 本地缓存:", cachedCustomModels.substring(0, 100));
+        
         // 如果服务端配置变化了，强制更新模型列表
         if (serverCustomModels !== cachedCustomModels) {
           console.log("[Models] 检测到模型配置变化，正在更新...");
@@ -290,6 +293,19 @@ export function useLoadData() {
           localStorage.setItem(CUSTOM_MODELS_CACHE_KEY, serverCustomModels);
           // 清除旧的模型缓存
           localStorage.removeItem("chat-next-web-models");
+          // 清除 app-config 里的 models（但保留其他配置）
+          const appConfig = localStorage.getItem("app-config");
+          if (appConfig) {
+            try {
+              const parsed = JSON.parse(appConfig);
+              if (parsed.state && parsed.state.models) {
+                parsed.state.models = [];
+                localStorage.setItem("app-config", JSON.stringify(parsed));
+              }
+            } catch (e) {
+              console.error("[Models] 清除配置缓存失败:", e);
+            }
+          }
           // 刷新页面以确保模型列表更新
           window.location.reload();
           return;
