@@ -349,8 +349,7 @@ export const useAccessStore = createPersistStore(
             // 还未过期，恢复临时访问状态
             const accessCode = get().accessCode;
             console.log(
-              `[恢复临时访问] 访问码: ${
-                accessCode ? accessCode.substring(0, 2) + "***" : "未设置"
+              `[恢复临时访问] 访问码: ${accessCode ? accessCode.substring(0, 2) + "***" : "未设置"
               }, 过期时间: ${new Date(expiryTime).toLocaleString()}`,
             );
 
@@ -410,7 +409,7 @@ export const useAccessStore = createPersistStore(
   }),
   {
     name: StoreKey.Access,
-    version: 3,
+    version: 4,
     migrate(persistedState, version) {
       if (version < 2) {
         const state = persistedState as {
