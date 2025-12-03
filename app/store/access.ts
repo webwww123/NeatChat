@@ -300,15 +300,17 @@ export const useAccessStore = createPersistStore(
           ensure(get(), ["accessCode"]))
       );
     },
-    fetch() {
-      if (fetchState > 0 || getClientConfig()?.buildMode === "export") return;
+    fetch(forceRefresh = false) {
+      if ((fetchState > 0 && !forceRefresh) || getClientConfig()?.buildMode === "export") return;
       fetchState = 1;
       fetch("/api/config", {
         method: "post",
         body: null,
         headers: {
           ...getHeaders(),
+          "Cache-Control": "no-cache",
         },
+        cache: "no-store",
       })
         .then((res) => res.json())
         .then((res) => {

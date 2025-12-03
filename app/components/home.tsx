@@ -306,6 +306,19 @@ export function useLoadData() {
               console.error("[Models] 清除配置缓存失败:", e);
             }
           }
+          // 清除 access-control 里的 customModels（但保留其他配置）
+          const accessConfig = localStorage.getItem("access-control");
+          if (accessConfig) {
+            try {
+              const parsed = JSON.parse(accessConfig);
+              if (parsed.state) {
+                parsed.state.customModels = serverCustomModels;
+                localStorage.setItem("access-control", JSON.stringify(parsed));
+              }
+            } catch (e) {
+              console.error("[Models] 更新 access 配置失败:", e);
+            }
+          }
           // 刷新页面以确保模型列表更新
           window.location.reload();
           return;
