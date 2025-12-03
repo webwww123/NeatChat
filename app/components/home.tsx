@@ -261,7 +261,7 @@ function Screen() {
 }
 
 // 用于存储上次的 customModels 配置
-const CUSTOM_MODELS_CACHE_KEY = "custom-models-hash";
+const CUSTOM_MODELS_CACHE_KEY = "custom-models-hash-v2";
 
 export function useLoadData() {
   const config = useAppConfig();
@@ -285,7 +285,7 @@ export function useLoadData() {
 
         console.log("[Models] 服务端配置:", serverCustomModels.substring(0, 100));
         console.log("[Models] 本地缓存:", cachedCustomModels.substring(0, 100));
-        
+
         // 如果服务端配置变化了，强制更新模型列表
         if (serverCustomModels !== cachedCustomModels) {
           console.log("[Models] 检测到模型配置变化，正在更新...");
