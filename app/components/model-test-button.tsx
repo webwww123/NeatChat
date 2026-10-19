@@ -4,6 +4,7 @@ import { testModels, ModelTestResult } from "../utils/model-test";
 import { useAccessStore } from "../store";
 import { showToast } from "./ui-lib";
 import Locale from "../locales";
+import { ACCESS_CODE_PREFIX } from "../constant";
 
 // 在组件外部定义一个sleep函数
 function sleep(ms: number): Promise<void> {
@@ -30,6 +31,14 @@ export function ModelTestButton(props: {
   const [timeout, setTimeout] = useState(props.initialTimeout || 5);
   const accessStore = useAccessStore();
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  // 服务端测试接口需要访问码，用户自带 API key 不能代替
+  const getAccessCodeHeaders = (): Record<string, string> => {
+    if (!accessStore.accessCode) return {};
+    return {
+      Authorization: `Bearer ${ACCESS_CODE_PREFIX}${accessStore.accessCode}`,
+    };
+  };
 
   useEffect(() => {
     if (props.onTimeoutChange) {
@@ -94,6 +103,7 @@ export function ModelTestButton(props: {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
+                ...getAccessCodeHeaders(),
               },
               body: JSON.stringify({
                 models: [modelId],

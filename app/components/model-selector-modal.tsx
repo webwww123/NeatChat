@@ -18,6 +18,7 @@ import {
 import styles from "./model-selector-modal.module.scss";
 import { ModelTestButton } from "./model-test-button";
 import { ModelTestResult, testModels } from "../utils/model-test";
+import { ACCESS_CODE_PREFIX } from "../constant";
 
 interface ModelInfo {
   id: string;
@@ -38,6 +39,14 @@ export function ModelSelectorModal(props: {
   const [loading, setLoading] = useState(false);
   const [customModelInput, setCustomModelInput] = useState("");
   const accessStore = useAccessStore();
+
+  // 服务端接口需要访问码；用户自带的 API key 不能代替访问码
+  const getAccessCodeHeaders = (): Record<string, string> => {
+    if (!accessStore.accessCode) return {};
+    return {
+      Authorization: `Bearer ${ACCESS_CODE_PREFIX}${accessStore.accessCode}`,
+    };
+  };
 
   // 解析当前已选模型，忽略@及其后面的类别信息
   const currentModelList = useMemo(() => {
@@ -308,6 +317,7 @@ export function ModelSelectorModal(props: {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              ...getAccessCodeHeaders(),
             },
             body: JSON.stringify({
               url: `${baseUrl}/v1/models`,
@@ -685,6 +695,7 @@ export function ModelSelectorModal(props: {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            ...getAccessCodeHeaders(),
           },
           body: JSON.stringify({
             models: [modelId],

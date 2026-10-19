@@ -28,6 +28,7 @@ import {
 import Locale from "../locales";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAccessStore } from "../store";
 import clsx from "clsx";
 
 export function PluginPage() {
@@ -93,6 +94,8 @@ export function PluginPage() {
         return fetch(`/api/proxy/${p.pathname}?${p.search}`, {
           headers: {
             "X-Base-URL": p.origin,
+            "x-neatchat-access-code":
+              useAccessStore.getState().accessCode || "",
           },
         });
       })

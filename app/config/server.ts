@@ -106,10 +106,9 @@ function getApiKey(keys?: string) {
   const randomIndex = Math.floor(Math.random() * apiKeys.length);
   const apiKey = apiKeys[randomIndex];
   if (apiKey) {
+    // 只记录使用了第几个密钥，不记录密钥本身
     console.log(
-      `[Server Config] using ${randomIndex + 1} of ${
-        apiKeys.length
-      } api key - ${apiKey}`,
+      `[Server Config] using ${randomIndex + 1} of ${apiKeys.length} api key`,
     );
   }
 

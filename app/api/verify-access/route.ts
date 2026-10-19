@@ -13,12 +13,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { accessCode, clientId } = body;
 
-    console.log(
-      `[验证请求] 访问码: ${accessCode.substring(
-        0,
-        2,
-      )}***, 客户端ID: ${clientId?.substring(0, 8)}***`,
-    );
+    console.log("[验证请求] 收到访问码校验请求");
 
     if (!accessCode) {
       return NextResponse.json(
@@ -45,9 +40,9 @@ export async function POST(req: NextRequest) {
         // 计算过期时间 (客户端负责存储和管理这个时间)
         const expiryTime = Date.now() + EXPIRY_TIME_MS;
 
-        // 记录临时访问的信息
+        // 记录临时访问的信息（只记录结果，不记录访问码）
         console.log(
-          `[临时访问] 访问码: ${accessCode}, 客户端ID: ${clientId?.substring(
+          `[临时访问] 客户端ID: ${clientId?.substring(
             0,
             8,
           )}***, 过期时间: ${new Date(expiryTime).toLocaleString()}`,
@@ -63,11 +58,11 @@ export async function POST(req: NextRequest) {
       }
 
       // 普通访问码，直接返回成功
-      console.log(`[普通验证成功] 访问码: ${accessCode.substring(0, 2)}***`);
+      console.log("[普通验证成功]");
       return NextResponse.json({ success: true, isTemporary: false });
     } else {
-      // 记录失败的尝试
-      console.log("[访问失败] 错误的访问码:", accessCode);
+      // 记录失败的尝试（只记录结果，不记录访问码）
+      console.log("[访问失败] 错误的访问码");
       console.log("[访问失败] 时间:", new Date().toLocaleString());
       console.log(
         "[访问失败] IP:",

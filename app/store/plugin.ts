@@ -58,6 +58,11 @@ export const FunctionToolService = {
     const headers: Record<string, string | undefined> = {
       "X-Base-URL": !isApp ? serverURL : undefined,
     };
+    if (!isApp) {
+      // 通用代理要求访问码；单独用专用头，避免与插件自身的鉴权头冲突
+      headers["x-neatchat-access-code"] =
+        useAccessStore.getState().accessCode || undefined;
+    }
     if (authLocation == "header") {
       headers[headerName] = tokenValue;
     }
