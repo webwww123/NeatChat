@@ -14,6 +14,7 @@ const DANGER_CONFIG = {
   disableFastLink: serverConfig.disableFastLink,
   customModels: serverConfig.customModels || process.env.CUSTOM_MODELS || "",
   defaultModel: serverConfig.defaultModel,
+  openaiCompatibleGateway: process.env.OPENAI_COMPATIBLE_GATEWAY === "true",
   baseUrl: process.env.BASE_URL || "https://api.openai.com",
   apiKey: process.env.OPENAI_API_KEY ? "已设置" : "",
 };

@@ -129,6 +129,7 @@ const DEFAULT_ACCESS_STATE = {
   disableFastLink: false,
   customModels: "",
   defaultModel: "",
+  openaiCompatibleGateway: false,
 
   // tts config
   edgeTTSVoiceName: "zh-CN-YunxiNeural",

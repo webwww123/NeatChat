@@ -29,6 +29,7 @@ import { DalleSize, DalleQuality, DalleStyle } from "@/app/typing";
 import {
   ChatOptions,
   getHeaders,
+  getEffectiveProvider,
   LLMApi,
   LLMModel,
   LLMUsage,
@@ -189,7 +190,7 @@ export class ChatGPTApi implements LLMApi {
       ...useChatStore.getState().currentSession().mask.modelConfig,
       ...{
         model: options.config.model,
-        providerName: options.config.providerName,
+        providerName: getEffectiveProvider(options.config.providerName),
       },
     };
 

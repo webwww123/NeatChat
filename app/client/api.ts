@@ -224,6 +224,14 @@ export function validString(x: string): boolean {
   return x?.length > 0;
 }
 
+export function getEffectiveProvider(provider: string | undefined) {
+  const accessStore = useAccessStore.getState();
+  // 模型的品牌标签保留在旧会话中；站点网关统一使用 OpenAI 兼容协议。
+  return accessStore.openaiCompatibleGateway && !accessStore.useCustomConfig
+    ? ServiceProvider.OpenAI
+    : provider;
+}
+
 export function getHeaders(ignoreHeaders: boolean = false) {
   const accessStore = useAccessStore.getState();
   const chatStore = useChatStore.getState();
@@ -239,18 +247,21 @@ export function getHeaders(ignoreHeaders: boolean = false) {
 
   function getConfig() {
     const modelConfig = chatStore.currentSession().mask.modelConfig;
-    const isGoogle = modelConfig.providerName === ServiceProvider.Google;
-    const isAzure = modelConfig.providerName === ServiceProvider.Azure;
-    const isAnthropic = modelConfig.providerName === ServiceProvider.Anthropic;
-    const isBaidu = modelConfig.providerName == ServiceProvider.Baidu;
-    const isByteDance = modelConfig.providerName === ServiceProvider.ByteDance;
-    const isAlibaba = modelConfig.providerName === ServiceProvider.Alibaba;
-    const isMoonshot = modelConfig.providerName === ServiceProvider.Moonshot;
-    const isIflytek = modelConfig.providerName === ServiceProvider.Iflytek;
-    const isXAI = modelConfig.providerName === ServiceProvider.XAI;
-    const isChatGLM = modelConfig.providerName === ServiceProvider.ChatGLM;
+    const provider = getEffectiveProvider(modelConfig.providerName);
+    const isGoogle = provider === ServiceProvider.Google;
+    const isAzure = provider === ServiceProvider.Azure;
+    const isAnthropic = provider === ServiceProvider.Anthropic;
+    const isBaidu = provider === ServiceProvider.Baidu;
+    const isByteDance = provider === ServiceProvider.ByteDance;
+    const isAlibaba = provider === ServiceProvider.Alibaba;
+    const isMoonshot = provider === ServiceProvider.Moonshot;
+    const isIflytek = provider === ServiceProvider.Iflytek;
+    const isXAI = provider === ServiceProvider.XAI;
+    const isChatGLM = provider === ServiceProvider.ChatGLM;
     const isEnabledAccessControl = accessStore.enabledAccessControl();
-    const apiKey = isGoogle
+    const apiKey = accessStore.openaiCompatibleGateway && !accessStore.useCustomConfig
+      ? ""
+      : isGoogle
       ? accessStore.googleApiKey
       : isAzure
       ? accessStore.azureApiKey
@@ -327,7 +338,7 @@ export function getHeaders(ignoreHeaders: boolean = false) {
 }
 
 export function getClientApi(provider: ServiceProvider): ClientApi {
-  switch (provider) {
+  switch (getEffectiveProvider(provider)) {
     case ServiceProvider.Google:
       return new ClientApi(ModelProvider.GeminiPro);
     case ServiceProvider.Anthropic:
